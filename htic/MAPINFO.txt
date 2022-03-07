@@ -1,0 +1,63 @@
+// Most of this is just straight out of Heretic defaults
+
+clearskills
+
+skill baby
+{
+	AutoUseHealth
+	AmmoFactor = 1.5
+	DoubleAmmoFactor = 1.5
+	DamageFactor = 0.5
+	EasyBossBrain
+	SpawnFilter = Baby
+	Name = "$MNU_WETNURSE"
+	EasyKey
+}
+
+skill easy
+{
+	DoubleAmmoFactor = 1.5
+	SpawnFilter = Easy
+	Name = "$MNU_YELLOWBELLIES"
+}
+
+skill normal
+{
+	DoubleAmmoFactor = 1.5
+	SpawnFilter = Normal
+	Name = "$MNU_BRINGEST"
+	DefaultSkill
+}
+
+skill hard
+{
+	DoubleAmmoFactor = 1.5
+	SpawnFilter = Hard
+	Name = "$MNU_SMITE"
+}
+
+// Same as hard, but our ACS code will behave slightly differently...
+skill iron
+{
+	DoubleAmmoFactor = 1.5
+	SpawnFilter = Hard
+	Name = "Iron Caster"
+}
+
+// Same as hard, but our ACS code will behave slightly differently...
+skill steel
+{
+	DoubleAmmoFactor = 1.5
+	SpawnFilter = Hard
+	Name = "Wizard of Steel"
+}
+
+skill nightmare
+{
+	AmmoFactor = 1.5
+	DoubleAmmoFactor = 1.5
+	FastMonsters
+	DisableCheats
+	SpawnFilter = Nightmare
+	Name = "$MNU_BLACKPLAGUE"
+}

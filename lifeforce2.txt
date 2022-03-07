@@ -1,0 +1,304 @@
+===========================================================================
+Title                   : Life Force
+Version                 : 2.1
+Filename                : lifeforce2.pk3, lfhtic.pk3, lfhex.pk3
+Release date            : 4/30/2018
+Author                  : Nathan Roberts
+Email Address           : nathanr@tardislabs.com
+Other Files By Author   : Parkour Lite
+Misc. Author Info       : Knows the true meaning of hell -- retail work.
+Description             : This was originally meant to be my entry for
+                          the second Mutator contest on the ZDoom forums, but
+                          ended up never being released. This was a contest
+                          where modders create a mod that changes the behavior
+                          of Doom in some way, using only the stock 
+                          resources -- no graphic or sound replacements, but
+                          existing resources can be modified with scripting.
+                          
+                          This is a magic-themed weapons mod that combines
+                          health and ammo into a single substance: Life Force.
+                          Weapons are replaced with attacks that drain health,
+                          but monsters also release health to compensate.  
+
+                          There are three separate PK3 files: lifeforce2.pk3
+                          for Doom, lfhtic.pk3 for Heretic, and lfhex.pk3 for
+                          Hexen. They all play roughly the same, but are
+                          slightly different, generally corresponding to
+                          differences in the base games.
+
+                          Full details at bottom.
+
+Additional Credits to   : Jimmy's Omega mod (another mutator), from which 
+                          I .. er .. borrowed a single line of code. (It was a
+                          palette translation.) The general magical-being theme
+                          was inspired by Omega as well (although I took the
+                          mechanics in a very different direction), and you
+                          might see a little bit of influence from
+                          wildweasel's StyleMod as well.
+===========================================================================
+* What is included *
+
+New levels              : None
+Sounds                  : No } 
+Music                   : No } (The whole point of a mutator)
+Graphics                : No }
+Dehacked/BEX Patch      : No. (ZDoom's decorate used instead)
+Demos                   : No
+Other                   : Scripting and configuration data, etc.
+Other files required    : A fairly recent ZDoom-based port
+
+
+* Play Information *
+
+Game                    : Versions included for Doom 2, Heretic and Hexen. 
+                          You can try using it with Doom 1 as well,
+                          by using doom.wad as the IWAD, then loading
+                          doom2.wad and doom.wad (again!) as PWADs in that
+                          order. I'm not sure if this is entirely 'kosher',
+                          but it seems to work. Naturally you won't get any of
+                          the Doom 2 items, like the SSG replacement. (Though
+                          it does work if you cheat it in.)
+Map #                   : None included
+Single Player           : Yeah.
+Cooperative 2-4 Player  : Should work, but untested.
+Deathmatch 2-4 Player   : Should work, but untested.
+Other game styles       : Untested. Try at your own risk.
+Difficulty Settings     : Added a couple new ones that affect the Life
+                          Force machanic.
+
+
+* Construction *
+
+Base                    : New from scratch
+Build Time              : A couple weeks initially. Refined on and off 
+                          over the last 10 years or so oh god has it really
+                          been that long holy shit I feel old
+Editor(s) used          : XWE (eww), later Slade3
+Known Bugs              : A few. See below.
+May Not Run With        : Any kind of weapon mod, including Brutal Doom.
+Tested With             : GZDoom 4.7.1 64bit
+
+* Copyright / Permissions *
+
+Authors MAY use the contents of this file as a base for
+modification or reuse.  Permissions have been obtained from original 
+authors for any of their resources modified or included in this file.
+
+You MAY distribute this file, provided you include this text file, with
+no modifications.  You may distribute this file in any electronic
+format (BBS, Diskette, CD, etc) as long as you include this file 
+intact.  I have received permission from the original authors of any
+modified or included content in this file to allow further distribution.
+
+* Where to get the file that this text file describes *
+
+Not available on the idgames archive. Seeing as it's not very, you know...
+*good*. Maybe if the forums respond favorably I'll submit it.
+
+Web sites: http://tardislabs.com/mutator
+
+
+* Detailed Description *
+
+This mod replaces all your weapons with magic-like abilities that drains your
+health rather than using ammo. To compensate, monsters drop soul globes that
+replenish your health when they die. Ammo (and ammo related) pickups in the
+original levels are replaced with soul globes, or other Life Force items.
+
+The original difficulty settings play more or less like the original. You
+get extra life force from drops in the easest and hardest. There's two new
+difficulty settings as well: "Iron Caster" gives you less life force from mob
+drops, while "Wizard of Steel" gives you less still, plus drops disappear
+after a period of time.
+
+When you get close to soul globes dropped from mobs, they'll slowly float
+towards you, so you can grab LF drops through grates or over ledges.
+
+For the Hexen version, this mod has just one character class, mostly based
+on the mage. The class-specific pickups in the original have been replaced with
+Life Force items, and all are accessable to all players.
+
+The weapons are:
+
+1A: Fist (Doom) / Staff (Heretic) / Cleric's Mace (Hexen)
+Basically unchanged. You have this at the start of the game. If you're reduced
+to using this, you're probably in pretty bad shape.
+
+1B: Plasma Hose. A short-range plasma attack. Drains HP slowly. Affected by
+gravity, so it can be useful for shooting over ledges. 
+Replaces the Chainsaw / Gauntlets / Frost Shards
+
+2: Beam. Your basic 'laser' attack. Slow and weak, but deals slightly more
+damage than it drains, resulting in a net gain in life force. At close range,
+delivers a melee attack that does double damage. 
+Replaces the Pistol / Elvenwand; in Hexen you start with it, along with the
+mace
+
+3A: Fireball. More damaging than the starter beam, but uses more HP; 5 per
+ball. 
+Replaces the shotgun / crossbow / Serpent Staff / axe
+
+3B: Spread Fireballs. Throws 3 fireballs at once, using 10HP per volley.
+Replaces super shotgun in Doom. In Heretic and Hexen, finding a second
+fireball pickup unlocks this. (You can set the 'LF_SGUPGRADE' console variable
+to true to enable this behavior in Doom as well) Note that this is the
+*second* weapon in slot 3, the opposite of Doom's SSG assignment. (It's also
+bound to slot 8)
+
+4: SparkLight. Sprays a swarm of spark-like projectiles that have a large
+spread, but home in aggressively on enemies when they get close. Drains HP
+rather fast. 
+Replaces the chaingun / Dragon's Claw / hammer
+
+5: FireBurner. Throws a medium-range stream of flame that burns anything in
+its path.  3HP per flame, but rapid-fire. 
+Replaces the rocket launcher / Skull Rod / Firestorm
+
+6: Lightning Bolt. Fires a bolt of lightning that can zap groups of smaller
+enemies, and rip through larger enemies in a line. Cost varies depending the
+duration of use, but minimum 15HP. Longer bursts are slightly more
+energy-efficient.
+Replaces the plasma rifle / Phoenix Rod / Arc of Death
+
+7: Decimator. Heavily damaging, tracking, ripping projectile. Can fire in a
+volley of 1-3 projecetiles, depending on how long you hold the fire
+button. Fizzles fter 4 seconds. The projectiles are progressively both more
+costly and more damaging; 100HP for the full volley. 
+Replaces the BFG / Fire Mace / final piece of Bloodscourge
+
+Weapon altfire:
+
+Each weapon (except the fist) has an alternate fire function that fires the
+previous weapon you had selected. You can select your own weapon combo
+this way.
+
+Pickups:
+
+Soul Globes: Give you health, in differing amounts. Monsters drop these
+when they die, and they replace ammo pickups. They can give you health
+beyond the 100% maximum. On the Wizard of Steel difficulty these fade and
+disappear after a few seconds.
+
+Stamina Bonus: Increases the absolute maximum amount of health you can
+have by 10%, up to a maximum of 500%, and also gives you up to 25% health as
+well. This always takes effect immediately as soon as you pick it up.
+Replaces the backpack / bag of holding / Mystic Urn
+
+Rampage: Allows you to make unlimited attacks while the powerup is active. You
+can still get hurt, and you still need enough life force to perform a given
+attack, but you don't lose any from performing your attacks. In Heretic, this
+also powers up your staff.
+Replaces the berserk / Tome of Power / Krater of Might
+
+Flechette (Hexen): These are the figher-style bouncy grenades.
+
+* Known issues *
+
+Stealth monsters don't have any death effects or drops, cause I CBA. Does
+anyone actually use these? Personally I think they're a pain in the ass.
+
+I'm not entirely satisfied with the pickup/inventory sprite for the big
+fireball weapon in Doom. The blue edges (which was an accident that I decided
+to keep) cause a nice aura-like effect on the projectile, but make the pickup
+icon look like crap.
+
+The status bar needs a bit of prettifying.
+
+The staff is far from perfect, due to the lack of persepctive. Eh. When you're
+making a mutator, everything's a dirty hack.
+
+Soul globes that are magnetted towards the player won't get picked up unless
+the player is moving. This seems to be built-in Doom behavior. (Any why not;
+in the original pickups could be counted on not to move around!)
+
+The Krater of Might powerup seems massively OP against bosses.
+
+
+* Version History *
+
+1.0: Initial version
+1.1: Gave each weapon an altfire attack, which is generally the weapon
+     in the previous slot.
+1.2: Changed the altfire attack, so that the altfire is the previously
+     selected weapon. Also somewhere around here changed the old numeric
+     ACS scripts to named scripts. I also made the sergeants and chaingunners
+     drop the shotgun and chaingun replacements (albeit with a smaller health
+     boost than the versions spawned on the map) since some mapsets don't give
+     them to you at all otherwise!
+1.3: Changed the boring old starter fireball with the (hopefully)
+     slightly less boring, slightly more useful beam. 
+1.4: Replaced the old hand animations with a new staff sprite.
+2.0: Two new difficulty settings added. Dropped soul globes now attract to the
+     player when they come near. Sergeants and chaingunners now only drop
+     weapons about 10% of the time, instead of every time. You can now see
+     what version you're running by typing 'lf_version' into the console. Much
+     of the code was refactored internally so it could be shared across games.
+     This is also when the Heretic and Hexen versions were made, although
+     at the time they're internally still labelled as Version 1.0
+2.1: Some weapon tweaks to bring it inline with the Heretic and Hexen
+     versions -- Fireburner, Lightning Bolt and Decimator behaviour changed.
+     Resprited the Decimator to a flaming skull, more akin to the Heretic and
+     Hexen versions.
+2.2: 
+     * Fixed a bug with the Decimator stopping after hitting a single enemy, 
+       caused by some internal ZDoom changes
+     * Fixed a bug where the Ettin didn't drop the intended amount of health
+     * Squashed a couple console warnings in the Hexen version
+
+* Strategy *
+
+(Possible spoilers)
+
+I have /attempted/ to design the weapons in this mod such that, when used
+/skillfully/, they can restore life force. That is, they can extract more
+health from monsters than they drain from you, when used properly.
+
+The monsters are designed to give out health pickups that are proportional
+to the amount of health they take to kill. The weapons are similarly
+designed such that the amount of health you spend dishing out attacks
+is generally the same as the amount you get back from killing monsters,
+so, overall, you break even.
+
+However, the amount of damage caused by a weapon can be a complex equation.
+
+The fist (or staff, or mace) takes no life force, but is weak, slow, and
+melee-only.
+
+The plasma hose is the next step up. It does require life force, but in
+much smaller amounts, and therefore can wring health out of enemies cheaply.
+However, its range is limited, and is a bit slow in killing enemies.
+
+The starter beam is also slow, weak, and cheap. However, it does more
+damage than it drains from you, therefore using it will cause you to gain
+life force over time. However, doing so is a slow and tedious effort. Also,
+if you can get close enough, the smack is fairly effective.
+
+The fireball does more damage, and travels much faster, but is overpowered
+against the smaller enemies. Therefore, you tend to lose life force as you use
+it, as some of it is wasted against weak single targets. Using it on larger
+targets results in less waste.
+
+The spread fireballs shoot three of the same projectile that the large
+fireball, for only twice the life force. Therefore, if two of your fireballs
+hit the mark, you break even compared to the single fireball. If all
+three fireballs hit the target(s), the attack becomes even more effective.
+
+The sparklight spews large amounts of projectiles, and also can very
+quickly drain your health. They tend to disperse at range, so they're 
+less effective at distant targets. When they do get near a target, they
+home in hard.
+
+The fireburner does a lot of damage, ripping through anything in its path,
+though its range is limited. It's also expensive, so it's best used against
+either larger monsters, or large clusters of monsters.
+
+The lightning bolt is extremely effective against clusters of humanoid
+enemes, as the lightning can jump from one enemy to the next. It's a
+waste against single small enemies however. It can also rip through
+enemies in a (relatively) straight line.
+
+The decimator is the most powerful attack in the game, and requires so
+much health to throw that you'll hardly ever have enough to fire more than
+a few full vollies at a time. It lasts for a full four seconds, ripping
+through any enemy it can find, and even bouncing off walls. Again, it's best
+used against larger monsters, or large clusters of small ones.

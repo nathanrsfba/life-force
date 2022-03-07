@@ -1,0 +1,1 @@
+server noarchive string lf_version = "LifeForce/Heretic v2.2";

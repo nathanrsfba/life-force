@@ -1,0 +1,64 @@
+// Most of this is just straight out of Doom defaults
+
+clearskills
+
+skill baby
+{
+	AutoUseHealth
+	AmmoFactor = 1.5
+	DoubleAmmoFactor = 1.5
+	DamageFactor = 0.5
+	EasyBossBrain
+	SpawnFilter = Baby
+	Name = "$MNU_APPRENTICE"
+}
+
+skill easy
+{
+	DoubleAmmoFactor = 1.5
+	SpawnFilter = Easy
+	Name = "$MNU_ENCHANTER"
+}
+
+skill normal
+{
+	DoubleAmmoFactor = 1.5
+	SpawnFilter = Normal
+	Name = "$MNU_SORCERER"
+	DefaultSkill
+}
+
+skill hard
+{
+	DoubleAmmoFactor = 1.5
+	SpawnFilter = Hard
+	Name = "$MNU_WARLOCK"
+}
+
+// Same as hard, but our ACS code will behave slightly differently...
+skill iron
+{
+	DoubleAmmoFactor = 1.5
+	SpawnFilter = Hard
+	Name = "Iron Caster"
+	Key = "i"
+}
+
+// Same as hard, but our ACS code will behave slightly differently...
+skill steel
+{
+	DoubleAmmoFactor = 1.5
+	SpawnFilter = Hard
+	Name = "Wizard of Steel"
+	Key = "w"
+}
+
+skill nightmare
+{
+	AmmoFactor = 1.5
+	DoubleAmmoFactor = 1.5
+	FastMonsters
+	DisableCheats
+	SpawnFilter = Nightmare
+	Name = "$MNU_ARCHMAGE"
+}

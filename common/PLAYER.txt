@@ -1,0 +1,52 @@
+// Player with new starting weapons and death states
+
+actor LifeForcePlayerCommon : LifeForcePlayerBase replaces LifeForcePlayerBase
+{
+	var int user_maxhealth;
+	var int user_altwep;
+	
+	Player.WeaponSlot 1, "PlasmaHose", "LFStaff"
+	Player.WeaponSlot 3, "SpreadFireballSkill", "FireballSkill"
+	Player.WeaponSlot 8, "SpreadFireballSkill"
+  
+	Player.StartItem "BeamSkill"
+	Player.StartItem "LFStaff"
+
+
+	States
+	{
+		Spawn:
+		STAF A 0
+		goto Super::Spawn
+		
+        Death.Fire:
+		TNT1 A 0 A_SetTranslation( "PlayerCrisp" )
+		TNT1 A 0 A_SpawnItemEx( "LFFlame" )
+		goto Death
+
+        Death.Lightning:
+		"####" "#" 0 A_NoBlocking
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 0 bright A_SpawnItemEx("LightningSpark", 0, 0, 20, 0, 0, 0, 0, SXF_TRANSFERPOINTERS)
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		goto Death
+
+		Death.Vaporize:
+		"####" "#" 0 A_Scream
+		"####" "#" 0 A_NoBlocking
+		"####" "#" 0 A_SetTranslation( "Zap" )
+		"####" "##########" 1 A_FadeOut(0.1)
+		TNT1 A -1
+		stop
+	}
+}

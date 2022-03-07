@@ -1,0 +1,9 @@
+// Game-specific classes that will be aliased to generic names so that
+// later common code can reference them
+
+actor LifeForcePlayerBase: MagePlayer replaces MagePlayer {}
+actor LFStaffBase: CWeapMace replaces CWeapMace 
+{
+	// So our Mage-derived class will be able to use it
+	Inventory.ForbiddenTo ""
+}

@@ -1,0 +1,149 @@
+#library "lifeforc"
+#include "zcommon.acs"
+
+int lastTic;
+
+/* Deduct amt health from player (501) */
+script "LF_SubHealth" (int amt)
+{
+	if(CheckInventory("PowerWeaponLevel2") == 0 &&
+		CheckInventory("PowerRampage") == 0)
+	{
+		SetActorProperty(0, APROP_Health, 
+		GetActorProperty(0, APROP_Health) - amt);
+		if(GetActorProperty(0, APROP_Health) <= 0)
+			DamageThing(0, 0);
+	}
+}
+
+/* Hurt player for amt health (502) */
+script "LF_Ouch" (int amt)
+{
+    DamageThing(amt, 0);
+}
+
+/* Heal player for amt health, up to current max (503) */
+script "LF_AddHealth" (int amt)
+{
+	int maxhealth = GetUserVariable(0, "user_maxhealth");
+	if(maxhealth <= 0) maxhealth = 200;
+	int health = GetActorProperty(0, APROP_Health);
+	
+	if(GameSkill() == 0 || GameSkill() == 6) amt = amt * 2;
+	else if(GameSkill() == 5) amt = round(amt * 0.75) >> 16;
+	else if(GameSkill() < 4) amt = round(amt * 1.5) >> 16;
+	
+	if(health < maxhealth)
+	{
+		health = health + amt;
+		if(health > maxhealth) health = maxhealth;
+		SetActorProperty(0, APROP_Health, health);
+		SetResultValue(TRUE);
+	}
+	else
+	{
+		SetResultValue(FALSE);
+	}
+}
+
+/* Give stamina bonus (504) */
+script "LF_Stamina" (void)
+{
+	// Workaround for the TEN BACKPACKS in MAP07:
+	// If multiple backpacks are picked up in a single tic,
+	// only give the bonus for the first
+	if( timer() == lastTic )
+	{
+		SetResultValue(TRUE);
+	}
+	else
+	{
+		lastTic = timer();
+		int maxhealth = GetUserVariable(0, "user_maxhealth");
+		if(maxhealth <= 0) maxhealth = 200;
+		if(maxhealth < 500)
+		{
+			maxhealth = maxhealth + 10;
+			SetUserVariable(0, "user_maxhealth", maxhealth);
+			Log(s:"Stamina Bonus!");
+			ACS_NamedExecuteWithResult( "LF_AddHealth", 25);
+			SetResultValue(TRUE);
+		}
+		else
+		{
+			int result;
+			result = ACS_NamedExecuteWithResult( "LF_AddHealth", 25);
+			if(result) Log(s:"Life Force Bonus");
+			SetResultValue(result);
+		}
+	}
+}
+
+/* Megasphere (505) */
+script "LF_Megasphere" (void)
+{
+	// *HACK*
+	int armor = GetArmorType("ArmorBonus", PlayerNumber()) +
+	GetArmorType("GreenArmor", PlayerNumber()) +
+	GetArmorType("BlueArmor", PlayerNumber()) +
+	GetArmorType("BlueArmorForMegasphere", PlayerNumber());
+
+	if(armor >= 200)
+	{
+		SetResultValue(ACS_NamedExecuteWithResult( "LF_AddHealth", 200));
+	}
+	else
+	{
+		ACS_NamedExecuteWithResult( "LF_AddHealth", 200);
+		GiveInventory("BlueArmorForMegasphere", 1);
+		SetResultValue(TRUE);
+	}
+}
+
+/* Force success in pickup state due to inexplicable 
+   brokenness in decorate (506) */
+script "LF_PickupHack" (void)
+{
+		SetResultValue(TRUE);
+}
+
+/* Get alternate weapon */
+script "LF_GetAltWep" (void)
+{
+	SetResultValue(GetUserVariable(0, "user_altwep"));
+}
+
+/* Set alternate weapon */
+script "LF_SetAltWep" (int wep)
+{
+	SetUserVariable(0, "user_altwep", wep);
+}
+
+/* Set alternate weapon inventory hack */
+script "LF_AltWepHack" (void)
+{
+	TakeInventory("AltWepHack", 99);
+	GiveInventory("AltWepHack", GetUserVariable(0, "user_altwep"));
+}
+
+/* Just a little thing I use for visuals testing.
+
+   Spawn a camera shooting the player's viewpoint, then set the player's
+   viewpoint to that camera. If there's already a camera, return the player
+   to their normal viewpoint */
+   
+Script "LF_TestCamera" (void)
+{
+	if( CheckPlayerCamera( PlayerNumber() ) < 0 )
+	{
+		int camera = UniqueTID();
+		SpawnForced( "AimingCamera", GetActorX( 0 ), GetActorY( 0 ), GetActorZ( 0 ) + 50.0, Camera, GetActorAngle( 0 ) >> 8 );
+		SetThingSpecial( Camera, 0, 0, 90, 90, ActivatorTID() );
+		ChangeCamera( Camera, 0, 0 );
+	}
+	else
+	{
+		ChangeCamera( 0, 0, 0 );
+		Thing_Remove( CheckPlayerCamera( PlayerNumber() ));
+	}
+}

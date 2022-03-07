@@ -1,0 +1,5 @@
+// Game-specific classes that will be aliased to generic names so that
+// later common code can reference them
+
+actor LifeForcePlayerBase: DoomPlayer replaces DoomPlayer {}
+actor LFStaffBase: Fist replaces Fist {}

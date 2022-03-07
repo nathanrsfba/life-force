@@ -1,0 +1,431 @@
+// Heretic monster definitions
+
+actor LFHereticImp: HereticImp replaces HereticImp
+{
+    DropItem "Health1" 
+    DropItem "Health1"
+    DropItem "Health1"
+    DropItem "Health1a"
+	
+	DamageFactor "Lightning", 1.5
+	
+	states
+	{
+		// Make the imp spawn its drops
+		Death:
+		TNT1 A 0 A_NoBlocking
+		goto Super::Death
+		
+		Death.Lightning:
+		IMPX S 1 A_SetTranslation( "Zap" )
+		"####" "#" 0 A_NoBlocking
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 0 bright A_SpawnItemEx("LightningSpark", 0, 0, 20, 0, 0, 0, 0, SXF_TRANSFERPOINTERS)
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		goto Super::Death
+
+		Crash.Lightning:
+		"####" "#" 1 A_SetTranslation( "Def" )
+		goto Super::Crash
+		
+		Crash.Vaporize:
+		"####" "##########" 1 A_FadeOut(0.1)
+		Stop
+		
+		Death.Fire:
+		TNT1 A 0 A_SetTranslation( "ImpCrisp" )
+		TNT1 A 0 A_SpawnItemEx( "LFFlame" )
+		goto Death
+
+		Death.Vaporize:
+		IMPX S 0 A_Scream
+		"####" "#" 0 A_NoBlocking
+		"####" "#" 0 A_SetTranslation( "Zap" )
+		"####" "##########" 1 A_FadeOut(0.1)
+		Stop
+		
+		XDeath:
+		TNT1 A 0 A_NoBlocking
+		goto Super::XDeath
+	}
+	
+}
+
+actor LFFlame
+{
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+FLOAT
+	
+	RenderStyle Translucent
+	Alpha 0.75
+
+	States
+	{
+		Spawn:
+		TNT1 A 0 
+		TNT1 A 0 A_ChangeVelocity( 0.0, 0.0, 2.0 )
+        FIRE EFGHIJKLMNO 2 bright
+		stop
+	}
+
+}
+
+
+actor LFHereticImpLeader: HereticImpLeader replaces HereticImpLeader
+{
+    DropItem "Health5" 
+    DropItem "Health1" 
+    DropItem "Health1" 
+    DropItem "Health1a" 
+
+	DamageFactor "Lightning", 1.5
+
+	states
+	{
+		// Make the imp spawn its drops
+		Death:
+		TNT1 A 0 A_NoBlocking
+		goto Super::Death
+
+		Death.Lightning:
+		IMPX S 1 A_SetTranslation( "Zap" )
+		"####" "#" 0 A_NoBlocking
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 0 bright A_SpawnItemEx("LightningSpark", 0, 0, 20, 0, 0, 0, 0, SXF_TRANSFERPOINTERS)
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		goto Super::Death
+
+		Crash.Lightning:
+		"####" "#" 1 A_SetTranslation( "Def" )
+		goto Super::Crash
+		
+		Crash.Vaporize:
+		"####" "##########" 1 A_FadeOut(0.1)
+		Stop
+		
+		Death.Fire:
+		TNT1 A 0 A_SetTranslation( "ImpCrisp" )
+		TNT1 A 0 A_SpawnItemEx( "LFFlame" )
+		goto Death
+
+		Death.Vaporize:
+		IMPX S 0 A_Scream
+		"####" "#" 0 A_NoBlocking
+		"####" "#" 0 A_SetTranslation( "Zap" )
+		"####" "##########" 1 A_FadeOut(0.1)
+		Stop
+		
+		XDeath:
+		TNT1 A 0 A_NoBlocking
+		goto Super::XDeath
+	}
+}
+
+actor LFMummy: Mummy replaces Mummy
+{
+    DropItem "Health5" 
+    DropItem "Health1" 
+    DropItem "Health1" 
+    DropItem "Health1a" 
+
+	DamageFactor "Lightning", 1.5
+
+	states
+	{
+		Death.Lightning:
+		MUMM H 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 0 bright A_SpawnItemEx("LightningSpark", 0, 0, 20, 0, 0, 0, 0, SXF_TRANSFERPOINTERS)
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		goto Super::Death
+		
+		Death.Fire:
+		TNT1 A 0 A_SetTranslation( "MummyCrisp" )
+		TNT1 A 0 A_SpawnItemEx( "LFFlame" )
+		goto Super::Death
+
+		Death.Vaporize:
+		MUMM H 0 A_Scream
+		"####" "#" 0 A_NoBlocking
+		"####" "#" 0 A_SetTranslation( "Zap" )
+		"####" "##########" 1 A_FadeOut(0.1)
+		Stop
+	}	
+}
+
+actor LFMummyGhost: MummyGhost replaces MummyGhost
+{
+    DropItem "Health5" 
+    DropItem "Health1" 
+    DropItem "Health1" 
+    DropItem "Health1a" 
+
+	DamageFactor "Lightning", 1.5
+
+	states
+	{
+		Death.Lightning:
+		MUMM H 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 0 bright A_SpawnItemEx("LightningSpark", 0, 0, 20, 0, 0, 0, 0, SXF_TRANSFERPOINTERS)
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		goto Super::Death
+		
+		Death.Fire:
+		TNT1 A 0 A_SetTranslation( "MummyCrisp" )
+		TNT1 A 0 A_SpawnItemEx( "LFFlame" )
+		goto Super::Death
+
+		Death.Vaporize:
+		MUMM H 0 A_Scream
+		"####" "#" 0 A_NoBlocking
+		"####" "#" 0 A_SetTranslation( "Zap" )
+		"####" "##########" 1 A_FadeOut(0.1)
+		Stop
+	}	
+}
+
+actor LFMummyLeader: MummyLeader replaces MummyLeader
+{
+    DropItem "Health10" 
+
+	DamageFactor "Lightning", 1.5
+
+	states
+	{
+		Death.Lightning:
+		MUMM H 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 0 bright A_SpawnItemEx("LightningSpark", 0, 0, 20, 0, 0, 0, 0, SXF_TRANSFERPOINTERS)
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		goto Super::Death
+		
+		Death.Fire:
+		TNT1 A 0 A_SetTranslation( "MummyCrisp" )
+		TNT1 A 0 A_SpawnItemEx( "LFFlame" )
+		goto Super::Death
+
+		Death.Vaporize:
+		MUMM H 0 A_Scream
+		"####" "#" 0 A_NoBlocking
+		"####" "#" 0 A_SetTranslation( "Zap" )
+		"####" "##########" 1 A_FadeOut(0.1)
+		Stop
+	}	
+}
+
+actor LFMummyLeaderGhost: MummyLeaderGhost replaces MummyLeaderGhost
+{
+    DropItem "Health10" 
+
+	DamageFactor "Lightning", 1.5
+
+	states
+	{
+		Death.Lightning:
+		MUMM H 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 0 bright A_SpawnItemEx("LightningSpark", 0, 0, 20, 0, 0, 0, 0, SXF_TRANSFERPOINTERS)
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		goto Super::Death
+		
+		Death.Fire:
+		TNT1 A 0 A_SetTranslation( "MummyCrisp" )
+		TNT1 A 0 A_SpawnItemEx( "LFFlame" )
+		goto Super::Death
+
+		Death.Vaporize:
+		MUMM H 0 A_Scream
+		"####" "#" 0 A_NoBlocking
+		"####" "#" 0 A_SetTranslation( "Zap" )
+		"####" "##########" 1 A_FadeOut(0.1)
+		Stop
+	}	
+}
+
+actor LFKnight: Knight replaces Knight
+{
+    DropItem "Health10"
+    DropItem "Health10"
+}
+
+actor LFKnightGhost: KnightGhost replaces KnightGhost
+{
+    DropItem "Health10"
+    DropItem "Health10"
+}
+
+actor LFWizard: Wizard replaces Wizard
+{
+	DropItem "Health10"
+	DropItem "Health5"
+	DropItem "Health1"
+	DropItem "Health1"
+	DropItem "Health1a"
+
+	DamageFactor "Lightning", 1.5
+
+	states
+	{
+		Death.Lightning:
+		WZRD E 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 0 bright A_SpawnItemEx("LightningSpark", 0, 0, 20, 0, 0, 0, 0, SXF_TRANSFERPOINTERS)
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		goto Super::Death
+		
+		Death.Fire:
+		TNT1 A 0 A_SetTranslation( "WizardCrisp" )
+		TNT1 A 0 A_SpawnItemEx( "LFFlame" )
+		goto Super::Death
+
+		Death.Vaporize:
+		WZRD E 0 A_Scream
+		"####" "#" 0 A_NoBlocking
+		"####" "#" 0 A_SetTranslation( "Zap" )
+		"####" "##########" 1 A_FadeOut(0.1)
+		Stop
+	}	
+}
+
+
+actor LFBeast: Beast replaces Beast
+{
+	DropItem "Health10"
+	DropItem "Health10"
+	DropItem "Health1"
+	DropItem "Health1a"
+}
+
+actor LFClink: Clink replaces Clink
+{
+	DropItem "Health10"
+	DropItem "Health5"
+}
+
+actor LFSnake: Snake replaces Snake
+{
+	DropItem "Health25"
+	DropItem "Health1"
+	DropItem "Health1"
+	DropItem "Health1a"
+
+	DamageFactor "Lightning", 1.5
+
+	states
+	{
+		Death.Lightning:
+		SNKE F 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 0 bright A_SpawnItemEx("LightningSpark", 0, 0, 20, 0, 0, 0, 0, SXF_TRANSFERPOINTERS)
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		goto Death
+
+		Death.Fire:
+		TNT1 A 0 A_SetTranslation( "SnakeCrisp" )
+		TNT1 A 0 A_SpawnItemEx( "LFFlame" )
+		goto Death
+
+		Death.Vaporize:
+		SNKE F 0 A_Scream
+		"####" "#" 0 A_NoBlocking
+		"####" "#" 0 A_SetTranslation( "Zap" )
+		"####" "##########" 1 A_FadeOut(0.1)
+		Stop
+	}
+}
+
+actor LFIronLich: IronLich replaces IronLich
+{
+	DropItem "Health50"
+	DropItem "Health10"
+	DropItem "Health10"
+}
+
+actor LFMinotaur: Minotaur replaces Minotaur
+{
+	DropItem "Health200"
+}
+
+actor LFSorcerer2: Sorcerer2 replaces Sorcerer2
+{
+	DropItem "Health200"
+}
+
+actor LFChicken: Chicken replaces Chicken
+{
+	DropItem "Health1a"
+}

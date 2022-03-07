@@ -1,0 +1,1074 @@
+// ---[ Staff w/o raise/lower animation ]--------
+
+actor LFStaff: LFStaffBase replaces LFStaffBase
+{
+	Weapon.SlotNumber 1
+	Weapon.SlotPriority 0
+	Inventory.Icon TNT1A0
+
+	States
+	{
+		Deselect:
+		STFF A 1 A_Lower
+		loop
+		
+		Select: 
+		STFF A 0 SetPlayerProperty(0,1,2)
+		"####" "#" 1 A_Raise
+		loop
+  }
+}
+
+// ---[ Base weapon definition ]----------------------------
+
+// All the attacks are in this base class. Subclasses will redefine
+// which state attacks jump to
+
+actor LifeForceWeapon: Weapon
+{
+	Weapon.Kickback 100
+	Weapon.SlotNumber 2 // ***
+	+WEAPON.WIMPY_WEAPON // ***
+	Inventory.Icon TNT1A0 // ***
+	Obituary "%o was burned by %k."
+	
+	States
+	{
+		Ready:
+		STAF AAAABBBBCCCCDDDDCCCCBBBBAAAA 1 A_WeaponReady
+		loop
+	
+		Deselect:
+		STAF A 0 A_TakeInventory("AltWepHack", 99)
+		Deselect.Loop:
+		STAF A 1 A_Lower
+		goto Deselect.Loop
+		
+		Select: 
+		STAF A 0 SetPlayerProperty(0,1,2)
+		STAF A 0 ACS_NamedExecuteWithResult("LF_AltWepHack")
+
+		Select.Loop:
+		STAF A 1 A_Raise
+		goto Select.Loop
+		
+		Fire: // Dummy, never called directly
+		
+		Fire.Beam:
+		STAF A 0 A_JumpIfCloser(128, "Melee.Beam")
+		STAF A 0 A_JumpIf( health <= 1, "Ouch" )
+		STAF A 0 A_Jump( 256, "Start.Beam" ) // For potential inheretence
+		
+		Start.Beam:
+		STF2 ABCDE 1
+		"####" "#" 0 A_Jump( 256, "Hold.Beam" ) // For potential inheretence
+
+		// This actually sends out 9 1-tic non-damaging railgun beams,
+		// followed by the one that actually does damage. This gives the
+		// illusion of a beam that slowly does damage, at about the
+		// same rate as the old fireball attack
+		Hold.Beam:
+		STF2 E 0 A_JumpIf( health <= 1, "Safety" )
+		"####" "#" 0 ACS_NamedExecuteWithResult( "LF_SubHealth", 1 )
+		"####" "#" 0 A_PlaySound( "lifeforce/beamfire", CHAN_WEAPON )
+		"####" "#########" 1 A_RailAttack( 
+			0,          // Damage
+			0,          // Spawn offset
+			0,          // Use Ammo
+			"None",     // Ring color
+			"ff 80 00", // Core color
+			RGF_SILENT | RGF_FULLBRIGHT | RGF_NOPIERCING, // Flags
+			0,          // Beam jaggedness
+			"BeamPuff",     // Puff actor
+			0,          // Horizontal spread
+			0,          // Vertical spread
+			0,          // Range
+			1,          // Particle duration (tics)
+			1.0,        // Distance between particles (multiplier)
+			0.0,        // Drift speed (multiplier)
+			"Beam",     // Particle actor
+			0           // Vertical offset
+		)
+		"####" "#" 1 A_RailAttack( 
+			18,          // Damage
+			0,          // Spawn offset
+			0,          // Use Ammo
+			"None",     // Ring color
+			"ff 80 00", // Core color
+			RGF_SILENT | RGF_FULLBRIGHT | RGF_NOPIERCING, // Flags
+			0,          // Beam jaggedness
+			"BeamPuff",     // Puff actor
+			0,          // Horizontal spread
+			0,          // Vertical spread
+			0,          // Range
+			1,          // Particle duration (tics)
+			1.0,        // Distance between particles (multiplier)
+			0.0,        // Drift speed (multiplier)
+			"Beam",     // Particle actor
+			0           // Vertical offset
+		)
+		"####" "#" 0 A_Refire( "Hold2.Beam" )
+		"####" "#" 0 A_Jump( 256, "EndFire.Beam" ) // For potential inheretence
+
+		// As above, but without the sfx
+		Hold2.Beam:
+		STF2 E 0 A_JumpIf( health <= 1, "Safety" )
+		"####" "#" 0 ACS_NamedExecuteWithResult( "LF_SubHealth", 1 )
+		"####" "#########" 1 A_RailAttack( 
+			0,          // Damage
+			0,          // Spawn offset
+			0,          // Use Ammo
+			"None",     // Ring color
+			"ff 80 00", // Core color
+			RGF_SILENT | RGF_FULLBRIGHT | RGF_NOPIERCING, // Flags
+			0,          // Beam jaggedness
+			"BeamPuff",     // Puff actor
+			0,          // Horizontal spread
+			0,          // Vertical spread
+			0,          // Range
+			1,          // Particle duration (tics)
+			1.0,        // Distance between particles (multiplier)
+			0.0,        // Drift speed (multiplier)
+			"Beam",     // Particle actor
+			0           // Vertical offset
+		)
+		"####" "#" 1 A_RailAttack( 
+			18,          // Damage
+			0,          // Spawn offset
+			0,          // Use Ammo
+			"None",     // Ring color
+			"ff 80 00", // Core color
+			RGF_SILENT | RGF_FULLBRIGHT | RGF_NOPIERCING, // Flags
+			0,          // Beam jaggedness
+			"BeamPuff",     // Puff actor
+			0,          // Horizontal spread
+			0,          // Vertical spread
+			0,          // Range
+			1,          // Particle duration (tics)
+			1.0,        // Distance between particles (multiplier)
+			0.0,        // Drift speed (multiplier)
+			"Beam",     // Particle actor
+			0           // Vertical offset
+		)
+		"####" "#" 0 A_Refire( "Hold.Beam" )
+		"####" "#" 0 A_Jump( 256, "EndFire.Beam" ) // For potential inheretence
+
+		EndFire.Beam:
+		"####" "#" 1 A_RailAttack( 
+			0,          // Damage
+			0,          // Spawn offset
+			0,          // Use Ammo
+			"None",     // Ring color
+			"ff 80 00", // Core color
+			RGF_SILENT | RGF_FULLBRIGHT | RGF_NOPIERCING, // Flags
+			0,          // Beam jaggedness
+			"BeamPuff",     // Puff actor
+			0,          // Horizontal spread
+			0,          // Vertical spread
+			0,          // Range
+			1,          // Particle duration (tics)
+			1.0,        // Distance between particles (multiplier)
+			0.0,        // Drift speed (multiplier)
+			"BeamFade",     // Particle actor
+			0           // Vertical offset
+		)
+		"####" "#" 0 A_Jump( 256, "End.Beam" )
+		
+		End.Beam:
+		"####" EDCBA 1
+		goto Ready
+
+		Melee.Beam:
+		STAF A 0 A_JumpIf( health <= 1, "Safety" )
+		"####" "#" 0 A_Jump( 256, "StartMelee.Beam" )
+		
+		StartMelee.Beam:
+		"####" "BCDEF" 1
+		"####" "#" 0 A_Jump( 256, "MeleePunch.Beam" )
+		
+		MeleePunch.Beam:
+		"####" "#" 0 ACS_NamedExecuteWithResult( "LF_SubHealth", 1 )
+		"####" "#" 0 A_CustomPunch(12,0,0,"SmackPuff",128)
+		"####" "#" 0 A_Jump( 256, "EndMelee.Beam" )
+
+		EndMelee.Beam:
+		"STAF" "FEDCB" 1
+		goto Ready
+
+		// Fireball
+		Fire.Fireball:
+		STAF A 0 A_JumpIf( health <= 5, "Ouch" )
+		"####" "#" 0 A_Jump( 256, "Start.Fireball" ) // For potential inheretence
+
+		Start.Fireball:
+		STF3 ABCDE 1
+		"####" "#" 0 A_Jump( 256, "Hold.Fireball" ) // For potential inheretence
+		
+		Hold.Fireball:
+		"####" "#" 0 ACS_NamedExecuteWithResult( "LF_SubHealth", 5 )
+    	"####" "#" 20 A_FireCustomMissile("FireballProjectile")
+		"####" "#" 0 A_Jump( 256, "End.Fireball" ) // For potential inheretence
+		
+		End.Fireball:
+		"####" EDCBA 1
+    	goto Ready
+
+		// Spread Fireball
+		Fire.Spread:
+		STAF A 0 A_JumpIf( health <= 10, "Ouch" )
+		"####" "#" 0 A_Jump( 256, "Start.Spread" ) // For potential inheretence
+		
+		Start.Spread:
+		STF3 ABCDE 1
+		"####" "#" 0 A_Jump( 256, "Hold.Spread" ) // For potential inheretence
+		
+		Hold.Spread:
+		"####" E 0 ACS_NamedExecuteWithResult( "LF_SubHealth", 10 )
+		"####" "#" 0 A_FireCustomMissile("SpreadFireballProjectileL", -5)
+		"####" "#" 0 A_FireCustomMissile("SpreadFireballProjectileR", 5)
+		"####" "#" 25 A_FireCustomMissile("SpreadFireballProjectile")
+		"####" "#" 0 A_Jump( 256, "End.Spread" ) // For potential inheretence
+		
+		End.Spread:
+		"####" EDCBA 1
+    	goto Ready
+
+		// Plasma hose. Spawns projectiles which are affected by gravity,
+		// which limits their range
+		Fire.Hose:
+		STF1 A 0 A_JumpIf( health <= 1, "Ouch" )
+		"####" "#" 0 A_Jump( 256, "Start.Hose" ) // For potential inheretence
+
+		Start.Hose:
+		"####" ABCDE 1
+		"####" "#" 0 A_Jump( 256, "Hold.Hose" ) // For potential inheretence
+		
+		Hold.Hose:
+		"####" "#" 0 A_JumpIf( health <= 1, "Safety" )
+		"####" "#" 0 ACS_NamedExecuteWithResult( "LF_SubHealth", 1 )
+		"####" "#" 2 A_FireCustomMissile("PlasmaHoseProjectile")
+		"####" "#" 2 A_FireCustomMissile("PlasmaHoseProjectile2")
+		"####" "#" 2 A_FireCustomMissile("PlasmaHoseProjectile")
+		"####" "#" 2 A_FireCustomMissile("PlasmaHoseProjectile2")
+		"####" "#" 2 A_FireCustomMissile("PlasmaHoseProjectile")
+		"####" "#" 2 A_FireCustomMissile("PlasmaHoseProjectile2")
+		"####" "#" 2 A_FireCustomMissile("PlasmaHoseProjectile")
+		"####" "#" 2 A_FireCustomMissile("PlasmaHoseProjectile2")
+		
+		Refire.Hose:
+		"####" "#" 0 A_Refire( "Hold.Hose" )
+		"####" "#" 0 A_Jump( 256, "End.Hose" ) // For potential inheretence
+
+		End.Hose:
+		"####" EDCBA 1
+		goto Ready
+
+		// SparkLight. Spawns many highly-spread, but homing projectiles
+		Fire.SparkLight:
+		STF4 A 0 A_JumpIf( health <= 1, "Ouch" )
+		"####" "#" 0 A_Jump( 256, "Start.SparkLight" ) // For potential inheretence
+		
+		Start.SparkLight:
+		"####" ABCDE 1
+		"####" "#" 0 A_Jump( 256, "Hold.SparkLight" ) // For potential inheretence
+		
+		Hold.SparkLight:
+		"####" "#" 0 A_JumpIf( health <= 1, "Safety" )
+		"####" "#" 0 ACS_NamedExecuteWithResult( "LF_SubHealth", 1 )
+		"####" "#" 1 A_FireCustomMissile( "SparkLightProjectile" )
+		"####" "#" 0 A_Refire( "Hold.SparkLight" )
+		"####" "#" 0 A_Jump( 256, "End.SparkLight" ) // For potential inheretence
+
+		End.SparkLight:
+		"####" EDCBA 1
+		goto Ready
+		
+		// Fireburner. Ripping, mid-range projectile that does AoE damage
+		// during its entire travel
+		Fire.Burner:
+		STF5 A 0 A_JumpIf( health <= 3, "Ouch" )
+		"####" "#" 0 A_Jump( 256, "Start.Burner" ) // For potential inheretence
+		
+		Start.Burner:
+		"####" ABCDE 1
+		"####" "#" 0 A_Jump( 256, "Hold.Burner" ) // For potential inheretence
+		
+		Hold.Burner:
+		"####" "#" 0 A_JumpIf( health <= 3, "Safety" )
+		"####" "#" 0 ACS_NamedExecuteWithResult( "LF_SubHealth", 3 )
+		"####" "#" 2 A_FireCustomMissile("FireburnerProjectile")
+		"####" "#" 0 A_Refire( "Hold.Burner" )
+		"####" "#" 0 A_Jump( 256, "End.Burner" ) // For potential inheretence
+
+		End.Burner:
+		"####" EDCBA 1
+		goto Ready
+
+		// Lightning bolt. More or less a basic railgun attack, except the
+		// puffs cause AoE damage on impact, which also chains to
+		// adjacent humanoid enemies
+		Fire.Lightning:
+		STF6 A 0 A_JumpIf( health <= 15, "Ouch" )
+		"####" "#" 0 A_Jump( 256, "Start.Lightning" ) // For potential inheretence
+
+		Start.Lightning:
+		"####" ABCDE 1
+		"####" "#" 0 A_PlaySound( "lifeforce/lightningstart", CHAN_AUTO )
+		"####" "#" 0 A_Jump( 256, "Hold.Lightning" ) // For potential inheretence
+
+		Hold.Lightning:
+		"####" "#" 0 A_SetArg( 0, 18 )
+		"####" "#" 0 A_JumpIf( health <= 15, "Safety" )
+		"####" "#" 0 ACS_NamedExecuteWithResult( "LF_SubHealth", 15 )
+		"####" "##########" 1 A_RailAttack( 
+			8,          // Damage
+			0,          // Spawn offset
+			0,          // Use Ammo
+			"None",     // Ring color
+			"80 c0 ff", // Core color
+			RGF_SILENT | RGF_FULLBRIGHT , // Flags
+			4,        // Beam jaggedness
+			"LightningPuff", // Puff actor
+			0,          // Horizontal spread
+			0,          // Vertical spread
+			0,          // Range
+			2,          // Particle duration (tics)
+			1.0,        // Distance between particles (multiplier)
+			0.0,        // Drift speed (multiplier)
+			"LightningBeam",     // Particle actor
+			0           // Vertical offset
+		)
+		"####" "#" 0 A_Refire( "Hold2.Lightning" )
+		"####" "#" 0 A_Jump( 256, "EndFire.Lightning" ) // For potential inheretence
+		
+		Hold2.Lightning:
+		"####" "#" 0 A_SetArg( 0, args[0] - 1 )
+		"####" "#" 0 A_JumpIf( args[0] == 0, "Sound.Lightning" )
+		"####" "#" 0 A_JumpIf( health <= 1, "Safety" )
+		"####" "#" 0 ACS_NamedExecuteWithResult( "LF_SubHealth", 1 )
+		"####" "#" 1 A_RailAttack( 
+			8,          // Damage
+			0,          // Spawn offset
+			0,          // Use Ammo
+			"None",     // Ring color
+			"80 c0 ff", // Core color
+			RGF_SILENT | RGF_FULLBRIGHT , // Flags
+			4,        // Beam jaggedness
+			"LightningPuff", // Puff actor
+			0,          // Horizontal spread
+			0,          // Vertical spread
+			0,          // Range
+			2,          // Particle duration (tics)
+			1.0,        // Distance between particles (multiplier)
+			0.0,        // Drift speed (multiplier)
+			"LightningBeam",     // Particle actor
+			0           // Vertical offset
+		)
+		// "####" "#" 0 A_PlaySound( "lifeforce/lightningfire", CHAN_WEAPON| CHAN_NOSTOP )
+		"####" "#" 0 A_Refire( "Hold2.Lightning" )
+		"####" "#" 0 A_Jump( 256, "EndFire.Lightning" ) // For potential inheretence
+
+		EndFire.Lightning:
+		"####" EDCBA 1
+		goto Ready
+
+		Sound.Lightning:
+		"####" "#" 0 A_PlaySound( "lifeforce/lightningfire", CHAN_AUTO )
+		"####" "#" 0 A_SetArg( 0, 28 )
+		"####" "#" 0 A_Jump( 256, "Hold2.Lightning" )
+		
+		// Decimator. Basically the Hand of God from Rise of the Triad.
+		// Homing projectile that just destroys everything it touches
+		Fire.Decimator:
+		STF7 A 0 A_JumpIf( health <= 25, "Ouch" )
+		"####" "#" 0 A_Jump( 256, "Start.Decimator" ) // For potential inheretence
+
+		Start.Decimator:
+		"####" ABCDE 1
+		"####" "#" 0 A_Jump( 256, "Hold.Decimator" ) // For potential inheretence
+		
+		Hold.Decimator:
+		"####" "#" 0 A_JumpIf( health <= 25, "Safety" )
+		"####" "#" 0 ACS_NamedExecuteWithResult( "LF_SubHealth", 25 )
+		"####" "#" 20 A_FireCustomMissile("DecimatorProjectile")
+		"####" "#" 0 A_Refire( "Hold2.Decimator" )
+		"####" "#" 0 A_Jump( 256, "End.Decimator" ) // For potential inheretence
+
+		Hold2.Decimator:
+		"####" "#" 0 A_JumpIf( health <= 25, "Safety" )
+		"####" "#" 0 ACS_NamedExecuteWithResult( "LF_SubHealth", 25 )
+		"####" "#" 20 A_FireCustomMissile("DecimatorProjectile2")
+		"####" "#" 0 A_Refire( "Hold3.Decimator" )
+		"####" "#" 0 A_Jump( 256, "End.Decimator" ) // For potential inheretence
+
+		Hold3.Decimator:
+		"####" "#" 0 A_JumpIf( health <= 50, "Safety" )
+		"####" "#" 0 ACS_NamedExecuteWithResult( "LF_SubHealth", 50 )
+		"####" "#" 20 A_FireCustomMissile("DecimatorProjectile3")
+		"####" "#" 0 A_Jump( 256, "End.Decimator" ) // For potential inheretence
+
+		End.Decimator:
+		"####" EDCBA 1
+		goto Ready
+
+		// Figure out what the current alternate weapon is and jump there
+		AltFire:
+		TNT1 A 0 A_JumpIf( CallACS("LF_GetAltWep") == 1, "Fire.Hose" )
+		TNT1 A 0 A_JumpIf( CallACS("LF_GetAltWep") == 2, "Fire.Beam" )
+		TNT1 A 0 A_JumpIf( CallACS("LF_GetAltWep") == 3, "Fire.Fireball" )
+		TNT1 A 0 A_JumpIf( CallACS("LF_GetAltWep") == 4, "Fire.SparkLight" )
+		TNT1 A 0 A_JumpIf( CallACS("LF_GetAltWep") == 5, "Fire.Burner" )
+		TNT1 A 0 A_JumpIf( CallACS("LF_GetAltWep") == 6, "Fire.Lightning" )
+		TNT1 A 0 A_JumpIf( CallACS("LF_GetAltWep") == 7, "Fire.Decimator" )
+		TNT1 A 0 A_JumpIf( CallACS("LF_GetAltWep") == 8, "Fire.Spread" )
+		goto Ready
+		
+		// Player tried to execute an attack with insufficient HP
+		Ouch:
+		STAF A 0 A_SetBlend("ff ff ff", .5, 5)
+		STAF A 15 ACS_NamedExecuteWithResult( "LF_Ouch", 1 )
+		goto ready
+
+		// Hold states jump here when the player is down to 1HP so player
+		// doesn't die if they hold down the attack button
+		Safety:
+		STAF A 1
+		STAF A 0 A_Refire( "Safety" )
+		goto Ready
+		
+	}
+}
+
+// ---[ Beam ]--------------------------------------------------
+
+// Particle actors for beam attack
+
+actor Beam
+{
+	Radius 6
+	Height 8
+	RenderStyle Add
+	Alpha 1
+	XScale 0.1
+	YScale 0.1
+    +NOGRAVITY
+	+NOTELEPORT
+	
+	States
+	{
+		Spawn:
+		BALA A 0 bright
+		
+		Main:
+		// Don't display if very close to the shooter, so it looks like
+		// it's coming from the staff, rather than the player's gut
+		"####" "#" 0 bright A_JumpIfCloser( 30, "Nevermind" )
+		"####" "#" 1 bright
+		
+		Nevermind:
+		"####" "#" 0
+		stop
+	}
+}
+
+// As above, but smoothly fades away. Used at the end of the shot
+actor BeamFade: Beam
+{
+	States
+	{
+		Spawn:
+		BALA A 0 bright
+		
+		Main:
+		"####" "#" 0 bright A_JumpIfCloser( 30, "Nevermind" )
+		"####" "##########" 1 bright A_FadeOut(0.1)
+
+		Nevermind:
+		"####" "#" 0
+		stop
+	}
+}
+
+actor BeamPuff: BulletPuff
+{
+	+PUFFONACTORS
+	+ALWAYSPUFF
+	VSpeed 0
+	+PUFFGETSOWNER
+	
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		stop
+	}
+}
+
+actor SmackPuff: BulletPuff
+{
+	SeeSound "lifeforce/staffsmack"
+	+PUFFONACTORS
+	/*
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_PlaySound("mummy/attack2")
+		goto Super::Spawn
+	}
+	*/
+}
+// ---[ Fireball ]--------------------------------------------------
+
+// Fireball pickup item, but also the base for further pickups
+actor FireballPickup : CustomInventory
+{
+	Inventory.PickupMessage ""
+	Inventory.PickupSound "lifeforce/gotweapon"
+	+FLOATBOB
+	+NOGRAVITY
+	XScale 0.75
+	YScale 0.75
+  
+	States
+	{
+		Spawn:
+		WEP3 ABCABCAB 2 bright A_FadeOut(0.1)
+		"####" CABCABCA 2 bright A_FadeIn(0.1)
+		loop
+		
+		Pickup:
+		TNT1 A 0 A_JumpIfInventory("FireballSkill", 1, "Heal")
+		TNT1 A 0 A_GiveInventory("FireballSkill")
+	    TNT1 A 0 A_Log("Fireball. Sweet, burny goodness.")
+		stop
+		
+		Heal:
+		TNT1 A 0 A_JumpIf(CallACS("LF_AddHealth",10), "Message")
+		fail
+		
+		Message:
+		TNT1 A 0 A_Log("Life Force Bonus")
+		TNT1 A 0 ACS_NamedExecuteWithResult("LF_PickupHack")
+		stop
+	}
+}
+
+actor FireballBase
+{
+	Radius 6
+	Height 8
+	Speed 10
+	Damage 6
+	Projectile
+	+RANDOMIZE
+	RenderStyle Add
+	Alpha 1
+	SeeSound "lifeforce/fireballstart"
+	DeathSound "lifeforce/fireballend"
+	Obituary "%o was burned by %k."
+	+NOEXTREMEDEATH
+	XScale 0.5
+	YScale 0.5
+  
+	States
+	{
+		Spawn:
+		BALA AA 4 bright
+		loop
+  
+		Death:
+		//BALA CDE 6 bright
+		TNT1 A 0
+		stop
+	}
+}
+
+
+actor FireballProjectile : FireballBase
+{
+	Speed 30
+  	Damage 30
+  	Obituary "%o was fireballed by %k."
+  	XScale 1.0
+  	YScale 1.0
+  	+NOEXTREMEDEATH
+  	
+  	States
+  	{
+		Spawn:
+  		BALB A 0
+		
+		Main:
+  		"####" ABC 4 bright // A_SeekerMissile(1,2,SMF_LOOK | SMF_PRECISE,50,10)
+  		loop
+		
+		Death:
+		"####" DEF 4 bright
+		stop
+  	}
+}
+
+// --[ Spread Fireball ]--------------------------------------------------
+
+actor SpreadFireballPickup : FireballPickup
+{
+	States
+  	{
+		Spawn:
+  		BALF AABBAABB 2 bright A_FadeOut(0.1)
+  		BALF AABBAABB 2 bright A_FadeIn(0.1)
+  		loop
+
+  		Pickup:
+  		TNT1 A 0 A_JumpIfInventory("SpreadFireballSkill", 1, "Heal")
+  		TNT1 A 0 A_GiveInventory("SpreadFireballSkill")
+  		TNT1 A 0 A_Log("Spread Fireball. Spread 'em!")
+  		stop
+
+		Heal:
+		TNT1 A 0 A_JumpIf(CallACS("LF_AddHealth",15), "Message")
+		fail
+  	}
+}
+
+actor SpreadFireballProjectile : FireballProjectile
+{
+	Speed 30
+  	Damage 30
+  	Obituary "%o was fireballed by %k."
+  	XScale 0.5
+  	YScale 0.5
+  	+NOEXTREMEDEATH
+  	// Translation "176:191=240:247"
+	// +SEEKERMISSILE
+  	
+  	States
+  	{
+		Spawn:
+		BALB A 0
+		
+		Main:
+		"####" ABCABCAB 1 bright A_SpawnItemEx("SpreadFireballTrail")
+  		loop
+
+  		Death:
+  		"####" DEF 6 bright
+  		stop
+  	}
+}
+
+actor SpreadFireballProjectileL : SpreadFireballProjectile
+{
+  	States
+  	{
+		Spawn:
+  		BALB A 0
+		
+		Main:
+  		"####" "#" 1 bright A_Weave(4, 0, 0.5, 1.0) // A_SeekerMissile(1,2,SMF_LOOK | SMF_PRECISE,50,10)
+		"####" "#" 0 bright A_SpawnItemEx("SpreadFireballTrail")
+  		loop
+  	}
+}
+
+actor SpreadFireballProjectileR : SpreadFireballProjectileL
+{
+	WeaveIndexXY 32
+}
+
+actor SpreadFireballTrail
+{
+	Speed 0
+	RenderStyle Add
+	Alpha .5
+	+NOGRAVITY
+  	XScale 0.5
+  	YScale 0.5
+
+	States
+	{
+		Spawn:
+		BALB ABC 4 Bright
+		Stop
+	}
+}
+
+// --[ Plasma Hose]--------------------------------------------------
+
+actor PlasmaHosePickup : FireballPickup
+{
+	States
+	{
+		Spawn:
+		WEP1 AAAAAAAA 2 bright A_FadeOut(0.1)
+		"####" AAAAAAAA 2 bright A_FadeIn(0.1)
+		loop
+
+		Pickup:
+		TNT1 A 0 A_JumpIfInventory("PlasmaHoseSkill", 1, "Heal")
+		TNT1 A 0 A_GiveInventory("PlasmaHoseSkill")
+		TNT1 A 0 A_Log("Plasma Hose. Making it rain death.")
+		stop
+	}
+}
+
+actor PlasmaHoseProjectile
+{
+	Radius 6
+	Height 8
+	Speed 20
+	Damage 2
+	Projectile
+	+RANDOMIZE
+	-NOGRAVITY
+	RenderStyle Add
+	Alpha 1
+	SeeSound "lifeforce/hosestart"
+	DeathSound "lifeforce/hoseend"
+	Obituary "%o was whipped by %k."
+
+	States
+	{
+		Spawn:
+		BALC ABABABAB 2 bright
+		loop
+
+		Death:
+		BALC CDEFG 1 Bright
+		Stop
+	}
+}
+
+actor PlasmaHoseProjectile2: PlasmaHoseProjectile
+{
+	Damage 1
+}
+
+
+
+// ---[ SparkLight ]--------------------------------------------------
+
+actor SparkLightPickup : FireballPickup
+{
+	States
+	{
+		Spawn:
+		WEP4 ABCABCAB 2 bright A_FadeOut(0.1)
+		"####" CABCABCA 2 bright A_FadeIn(0.1)
+		"####" BC 2 bright
+		loop
+
+		Pickup:
+		TNT1 A 0 A_JumpIfInventory("SparkLightSkill", 1, "Heal")
+		TNT1 A 0 A_GiveInventory("SparkLightSkill")
+		TNT1 A 0 A_Log("SparkLight.")
+		stop
+
+		Heal:
+		TNT1 A 0 A_JumpIf(CallACS("LF_AddHealth",15), "Message")
+		fail
+	}
+}
+
+
+actor SparkLightProjectile
+{
+	Speed 32
+	Radius 8
+	Height 8
+	Damage 2
+	+CANNOTPUSH
+	+NODAMAGETHRUST
+	+SEEKERMISSILE
+	PROJECTILE
+	SeeSound "lifeforce/sparklight"
+	Alpha 0.75
+	XScale 0.5
+	YScale 0.5
+	
+	States
+	{
+		Spawn:
+		BALD A 0 Bright
+		
+		Main:
+		"####" "#####" 1 Bright A_ChangeVelocity(frandom(-2.5,2.5),frandom(-2.5,2.5),frandom(-2.5,2.5),1)
+		  
+		Flight:
+		"####" "#" 0 Bright A_ChangeVelocity(frandom(-2.5,2.5),frandom(-2.5,2.5),frandom(-2.5,2.5),1)
+		"####" "#" 1 Bright A_SeekerMissile(360,360,SMF_LOOK | SMF_PRECISE,256,1)
+		Loop
+
+		Death:
+		TNT1 A 0
+		Stop
+	}
+}
+
+// ---[ Fireburner ]--------------------------------------------------
+
+actor FireburnerPickup : FireballPickup
+{
+	XScale 0.25
+	YScale 0.25
+	States
+	{
+		Spawn:
+		WEP5 ABCABCAB 2 bright A_FadeOut(0.1)
+		"####" CABCABCA 2 bright A_FadeIn(0.1)
+		"####" BC 2 bright
+		loop
+
+		Pickup:
+		TNT1 A 0 A_JumpIfInventory("FireburnerSkill", 1, "Heal")
+		TNT1 A 0 A_GiveInventory("FireburnerSkill")
+		TNT1 A 0 A_Log("Fireburner. Burninate!!")
+		stop
+
+		Heal:
+		TNT1 A 0 A_JumpIf(CallACS("LF_AddHealth",20), "Message")
+		fail
+	}
+}
+
+actor FireburnerProjectile
+{
+	Game Heretic
+	Radius 6
+	Height 8
+	Speed 25
+	Damage 2
+	DamageType "Fire"
+	Obituary "%o was flamed by %k."
+	+Ripper
+	Projectile
+	+RANDOMIZE
+	RenderStyle Add
+	Alpha 1
+	SeeSound "lifeforce/burner"
+	XScale 1.0
+	YScale 1.0
+	Translation none
+
+	States
+	{
+		Spawn:
+		FX06 A 0
+		
+		Main:
+		"####" ABCB 2 bright 
+
+		Fireloop:
+		"####" "#" 0 bright A_PlaySound("lifeforce/burnerhit")
+		"####" ABCDEFGH 2 bright A_Explode(2, 256, 0, false, 256)
+		"####" IJKL 2 bright
+		stop
+
+		Death:
+		"####" "#" 0  A_Explode(2, 256, 0, false, 256)
+		"####" DEFG 2 bright
+		stop
+	}
+}
+/*
+actor FireburnerTrail
+{
+	States
+	{
+		Spawn:
+		FIRE A 2 bright
+		FIRE BCD 2 bright
+		FIRE EEFFGGHH 2 bright
+		stop
+	}
+}
+*/
+
+// ---[ Lightning ]---------------------------------------------------
+
+actor LightningBoltPickup : FireballPickup
+{
+	XScale 0.25
+	YScale 0.25
+	States
+
+	{
+		Spawn:
+		WEP6 ABCBAA 2 bright A_FadeOut(0.1)
+		"####" ABCBAA 2 bright A_FadeIn(0.1)
+		loop
+
+		Pickup:
+		TNT1 A 0 A_JumpIfInventory("LightningBoltSkill", 1, "Heal")
+		TNT1 A 0 A_GiveInventory("LightningBoltSkill")
+		TNT1 A 0 A_Log("Lightning Bolt. Thor never had it so good.")
+		stop
+
+		Heal:
+		TNT1 A 0 A_JumpIf(CallACS("LF_AddHealth",20), "Message")
+		fail
+	}
+}
+
+// Spawned when the bolt hits something
+actor LightningPuff: BulletPuff
+{
+	DamageType "Lightning"
+	+PUFFONACTORS
+	+ALWAYSPUFF
+	VSpeed 0
+	+PUFFGETSOWNER
+	
+	States
+	{
+		Spawn:
+		LPUF A 0 bright
+		
+		Main:
+		"####" "#" 4 bright A_Explode(8, 192, 0)
+		"####" BCD 4 bright
+		stop
+
+		Crash:
+		TNT1 A 0
+		stop
+	}
+}
+
+// Spawned when something dies by lightning
+actor LightningSpark
+{
+	DamageType "Lightning"
+	+NOGRAVITY
+	+RANDOMIZE
+	
+	States
+	{
+		Spawn:
+		LPUF A 0 bright 
+
+		Main:
+		"####" "#" 4 bright A_Explode(80, 192, 0)
+		"####" BCD 4 bright
+		stop
+	}
+}
+
+// Particles for lightning beam
+actor LightningBeam
+{
+	Radius 6
+	Height 8
+	RenderStyle Add
+	Alpha 1
+	XScale 0.25
+	YScale 0.25
+    +NOGRAVITY
+	+NOTELEPORT
+	
+	States
+	{
+		Spawn:
+		LBAL A 0 bright
+		
+		Main:
+		// Don't display if very close to the shooter, so it looks like
+		// it's coming from the staff, rather than the player's gut
+		"####" "#" 0 bright A_JumpIfCloser( 30, "Nevermind" )
+		"####" "#" 2 bright
+		
+		Nevermind:
+		"####" "#" 0
+		stop
+	}
+}
+
+
+// ---[ Decimator ]-------------------------------------------------------
+
+actor DecimatorPickup : FireballPickup
+{
+	XScale 0.5
+	YScale 0.5
+	
+	States
+	{
+		Spawn:
+		WEP7 ABCABCAB 2 bright A_FadeOut(0.1)
+		"####" CABCABCA 2 bright A_FadeIn(0.1)
+		"####" BC 2 bright 
+		loop
+
+		Pickup:
+		TNT1 A 0 A_JumpIfInventory("DecimatorSkill", 1, "Heal")
+		TNT1 A 0 A_GiveInventory("DecimatorSkill")
+		TNT1 A 0 A_Log("Decimator! Nothing is safe now!")
+		stop
+
+		Heal:
+		TNT1 A 0 A_JumpIf(CallACS("LF_AddHealth",30), "Message")
+		fail
+	}
+}
+
+actor DecimatorProjectile : FireballProjectile
+{
+	Speed 20
+	Damage (15)
+	Obituary "%o was decimated by %k."
+	+SEEKERMISSILE
+	+RIPPER
+    +FOILINVUL
+	BounceType "Doom"
+	-ALLOWBOUNCEONACTORS
+    -BOUNCEONACTORS
+	Reactiontime 23
+	DamageType "Vaporize"
+	Scale 0.75
+	
+	States
+	{
+		Spawn:
+		BALE ABCA 4 bright
+		goto Fireloop
+
+		Fireloop:
+		"####" "#" 0 A_JumpIf( reactiontime % 4 != 0, "NoSound" )
+		"####" "#" 0 A_PlaySound( "lifeforce/decactive" )
+		
+		NoSound:
+		"####" BCA 2 bright A_SeekerMissile(360, 45, SMF_LOOK | SMF_PRECISE, 256)
+		"####" "#" 0 A_Countdown
+		goto FireLoop
+
+		Death:
+		"####" DEF 6 bright
+		stop
+	}
+}
+
+actor DecimatorProjectile2 : DecimatorProjectile
+{
+	Scale 1.0
+	Damage (25)
+}
+
+actor DecimatorProjectile3 : DecimatorProjectile
+{
+	Scale 1.25
+	Damage (45)
+}
+
+// ---[ Alternate Weapon Statusbar Hack ]--------------------
+
+/* 
+	This inventory item selects what the current altfire attack is, mainly
+	for the purpose of the statusbar, which can't read custom decorate
+	variables
+*/
+
+actor AltWepHack : Inventory
+{
+		Inventory.MaxAmount 9
+}

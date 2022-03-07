@@ -1,0 +1,17 @@
+$alias lifeforce/beamfire ThrustSpikeRaise
+$alias lifeforce/lightningstart MageLightningFire
+$alias lifeforce/lightningfire MageLightningZap
+$alias lifeforce/staffswing FighterHammerMiss
+$alias lifeforce/staffsmack FighterAxeHitThing
+$alias lifeforce/fireballstart PoisonShroomDeath
+$alias lifeforce/fireballend Fireball
+$alias lifeforce/hosestart FighterSwordFire
+$alias lifeforce/sparklight FighterSwordFire
+$alias lifeforce/burner PlayerFighterBurnDeath
+$alias lifeforce/burnerhit vile/firecrkl
+$alias lifeforce/decactive SpiritActive
+$alias lifeforce/decend SpiritDie
+
+$alias lifeforce/pickup misc/i_pkup
+$alias lifeforce/gotpowerup misc/p_pkup
+$alias lifeforce/gotweapon misc/p_pkup

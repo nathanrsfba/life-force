@@ -1,0 +1,399 @@
+// Heretic-specific weapon subclasses
+
+actor XLifeForceWeapon: LifeForceWeapon
+{
+    States
+    {
+        Start.Hose:
+        "####" A 1 Offset(0, 36)
+        "####" B 1 Offset(0, 40)
+        "####" C 1 Offset(0, 44)
+        "####" D 1 Offset(0, 48)
+        "####" E 1 Offset(0, 52)
+        goto Hold.Hose
+        
+        End.Hose:
+        "####" E 1 Offset(0, 52)
+        "####" D 1 Offset(0, 48)
+        "####" C 1 Offset(0, 44)
+        "####" B 1 Offset(0, 40)
+        "####" A 1 Offset(0, 36)
+        goto Ready
+        
+        Start.SparkLight:
+        STF1 A 0
+        goto Super::Start.Sparklight
+
+        Start.Lightning:
+        STF1 A 0
+        goto Super::Start.Lightning
+
+        Melee.Beam:
+        STAF A 0 A_JumpIf( health <= 1, "Safety" )
+        "####" "B" 1 Offset(-10,62) 
+        "####" "C" 1 Offset(-20,52)
+        "####" "D" 1 Offset(-30,62)
+        "####" "C" 1 Offset(-40,72)
+        "####" "B" 1 Offset(-50,82)
+        
+        MeleeHold.Beam:
+        SMCE "A" 1 Offset(160,235) A_PlaySound("lifeforce/staffswing")
+        "####" "#" 1 Offset(120,198)
+        "####" "#" 1 Offset(80,161)
+        "####" "#" 1 Offset(40,124)
+        "####" "#" 1 Offset(1,86) ACS_NamedExecuteWithResult( "LF_SubHealth", 1 )
+        "####" "#" 0 A_CustomPunch(12,0,0,"SmackPuff",128)
+        "####" "#" 1 Offset(-40,86)
+        "####" "#" 1 Offset(-80,126)
+        "####" "#" 1 Offset(-120,166)
+        "####" "#" 1 Offset(-160,206)
+        "####" "#" 0 A_Refire( "MeleeRefire.Beam" )
+        goto EndMelee.Beam
+        
+        MeleeRefire.Beam:
+        TNT1 A 10
+        "####" "#" 0 A_Refire( "MeleeHold.Beam" )
+        
+        EndMelee.Beam:
+        "STAF" "A" 1 Offset(-50,82)
+        "####" "B" 1 Offset(-40,72)
+        "####" "C" 1 Offset(-30,62)
+        "####" "D" 1 Offset(-20,52)
+        "####" "C" 1 Offset(-10,42) 
+        goto Ready
+        
+        Start.Burner:
+        "####" ABCDE 1
+        
+        Hold.Burner:
+        TNT1 A 0 A_GunFlash( "Flash.Burner" )
+        goto Super::Hold.Burner
+        
+        Flash.Burner:
+        STF5 FG 1
+        stop
+        
+        End.Burner:
+        STF5 DCBA 2
+        goto Ready
+        
+        Start.Decimator:
+        "####" ABCDE 1
+        
+        Hold.Decimator:
+        TNT1 A 0 A_GunFlash( "Flash.Decimator" )
+        goto Super::Hold.Decimator
+        
+        Hold2.Decimator:
+        TNT1 A 0 A_GunFlash( "Flash.Decimator" )
+        goto Super::Hold2.Decimator
+        
+        Hold3.Decimator:
+        TNT1 A 0 A_GunFlash( "Flash.Decimator" )
+        goto Super::Hold3.Decimator
+        
+        Flash.Decimator:
+        STF7 EFGFGFGFGF 2
+        stop
+        
+        End.Decimator:
+        STF7 DCBA 2
+        goto Ready
+        
+    }
+}
+
+actor BeamSkill : XLifeForceWeapon
+{
+    Weapon.SlotNumber 2
+    Obituary "%o was burned by %k."
+    Inventory.Icon WEP2A0
+    
+    States
+    {
+        Deselect:
+        TNT1 A 0 A_SetUserVar( "user_altwep", 2 )
+        TNT1 A 0
+        goto Super::Deselect
+        
+        Fire:
+        goto Super::Fire.Beam
+    }
+}
+
+actor FireballSkill : XLifeForceWeapon replaces CWeapStaff
+{
+    Weapon.SlotNumber 3
+    Weapon.SlotPriority 1
+    Obituary "%o was burned by %k."
+    Inventory.Icon WEP3A0
+    
+    States
+    {
+        Spawn:
+        TNT1 A 0
+        TNT1 A 0 A_SpawnItemEx("FireballPickup")
+        stop
+
+        Deselect:
+        TNT1 A 0 A_SetUserVar( "user_altwep", 3 )
+        TNT1 A 0
+        goto Super::Deselect
+        
+        Fire:
+        goto Super::Fire.Fireball
+    }
+}
+
+// Fighter's axe will spawn fireball as well
+actor FireballPickup2 replaces FWeapAxe
+{
+    States
+    {
+        Spawn:
+        TNT1 A 0
+        TNT1 A 0 A_SpawnItemEx("FireballPickup")
+        stop
+    }
+}
+
+actor SpreadFireballSkill: XLifeForceWeapon
+{
+    Weapon.SlotPriority 0
+    Weapon.SlotNumber 3
+    Inventory.Icon "WEP8A0"
+    
+    States
+    {
+        Spawn:
+        TNT1 A 0
+        TNT1 A 0 A_SpawnItemEx("SpreadFireballPickup")
+        stop
+
+        Deselect:
+        TNT1 A 0 A_SetUserVar( "user_altwep", 8 )
+        TNT1 A 0
+        goto LifeForceWeapon::Deselect
+
+        Fire:
+        TNT1 A 0
+        goto Super::Fire.Spread
+    }
+}
+
+// This one gives the spread fireball skill when picked up a second time,
+// similar to the Heretic case
+actor XFireballPickup: FireballPickup replaces FireballPickup
+{
+    States
+    {
+        Pickup:
+        TNT1 A 0 A_JumpIfInventory("SpreadFireballSkill", 1, "Heal")
+        TNT1 A 0 A_JumpIfInventory("FireballSkill", 1, "Upgrade")
+        TNT1 A 0 A_GiveInventory("FireballSkill")
+        TNT1 A 0 A_Log("Fireball. Sweet, burny goodness.")
+        stop
+        
+        Upgrade:
+        TNT1 A 0 A_GiveInventory("SpreadFireballSkill")
+        TNT1 A 0 A_Log("Spread Fireball. Spread 'em!")
+          stop
+    }
+}
+
+actor PlasmaHoseSkill : XLifeForceWeapon replaces MWeapFrost
+{
+    Weapon.SlotNumber 1
+    Weapon.SlotPriority 1
+    Obituary "%o was hosed by %k."
+    Inventory.Icon "WEP1A0"
+    
+    States
+    {
+        Spawn:
+        TNT1 A 0
+        TNT1 A 0 A_SpawnItemEx("PlasmaHosePickup")
+        stop
+
+        Deselect:
+        TNT1 A 0 A_SetUserVar( "user_altwep", 1 )
+        goto Super::Deselect
+
+        Fire:
+        TNT1 A 0
+        goto Super::Fire.Hose
+
+    }
+}
+
+actor XPlasmaHoseProjectile: PlasmaHoseProjectile replaces PlasmaHoseProjectile
+{
+    States
+    {
+        Spawn:
+        BALD ABABABAB 2 bright
+        loop
+
+        Death:
+        CTFX ABCDEF 1 Bright
+        Stop
+    }
+}
+
+actor XPlasmaHoseProjectile2: XPlasmaHoseProjectile replaces PlasmaHoseProjectile2
+{
+    Damage 1
+}
+
+actor SparkLightSkill : XLifeForceWeapon replaces FWeapHammer
+{
+    Weapon.SlotNumber 4
+    Obituary "%o was burned by %k."
+    Inventory.Icon "WEP4A0"
+    
+    States
+    {
+        Spawn:
+        TNT1 A 0
+        TNT1 A 0 A_SpawnItemEx("SparkLightPickup")
+        stop
+
+        Deselect:
+        TNT1 A 0 A_SetUserVar( "user_altwep", 4 )
+        TNT1 A 0
+        goto Super::Deselect
+        
+        Fire:
+        goto Super::Fire.SparkLight
+    }
+}
+
+actor FireburnerSkill : XLifeForceWeapon replaces CWeapFlame
+{
+    Weapon.SlotNumber 5
+    Obituary "%o was flamed by %k."
+    Inventory.Icon "WEP5A0"
+    
+    States
+    {
+        Spawn:
+        TNT1 A 0
+        TNT1 A 0 A_SpawnItemEx("FireburnerPickup")
+        stop
+
+        Deselect:
+        TNT1 A 0 A_SetUserVar( "user_altwep", 5 )
+        goto Super::Deselect
+
+        Fire:
+        TNT1 A 0
+        goto Super::Fire.Burner
+    }
+}
+
+actor XFireburnerProjectile: FireburnerProjectile replaces FireburnerProjectile
+{
+    States
+    {
+        Spawn:
+        CFFX A 0
+        goto Main
+    }
+}
+
+actor LightningBoltSkill: XLifeForceWeapon replaces MWeapLightning // Aproppriate.
+{
+    Weapon.SlotNumber 6
+    Obituary "%o was shocked by %k."
+    Inventory.Icon "WEP6I0"
+    DamageType "Lightning"
+    
+    States
+    {
+        Spawn:
+        TNT1 A 0
+        TNT1 A 0 A_SpawnItemEx("LightningBoltPickup")
+        stop
+
+        Deselect:
+        TNT1 A 0 A_SetUserVar( "user_altwep", 6 )
+        goto Super::Deselect
+
+        Fire:
+        TNT1 A 0
+        goto Super::Fire.Lightning
+
+    }
+}
+
+actor DecimatorSkill : XLifeForceWeapon replaces MWeaponPiece1
+{
+    Weapon.SlotNumber 7
+    Obituary "%o was decimated by %k."
+    Inventory.Icon "WEP7A0"
+    
+    States
+    {
+        Spawn:
+        TNT1 A 0
+        TNT1 A 0 A_SpawnItemEx("DecimatorPickup")
+        stop
+
+        Deselect:
+        TNT1 A 0 A_SetUserVar( "user_altwep", 7 )
+        goto Super::Deselect
+        
+        Fire:
+        goto Super::Fire.Decimator
+    }
+}
+
+actor XDecimatorProjectile: DecimatorProjectile replaces DecimatorProjectile
+{
+    Reactiontime 17
+    Translation "0:32=164:185"
+    DeathSound "lifeforce/decend"
+    Scale 0.5
+
+    States
+    {
+        Spawn:
+        SPIR ABAB 4 bright
+
+        Fireloop:
+        "####" "#" 0 A_JumpIf( reactiontime % 4 != 0, "NoSound" )
+        "####" "#" 0 A_PlaySound( "lifeforce/decactive" )
+        
+        NoSound:
+        "####" AABB 2 bright A_SeekerMissile(360, 45, SMF_LOOK | SMF_PRECISE, 256)
+        "####" "#" 0 A_Countdown
+        goto FireLoop
+
+        Death:
+        "####" EFGHIJ 6 bright
+        stop
+    }
+}
+
+actor XDecimatorProjectile2: XDecimatorProjectile replaces DecimatorProjectile2
+{
+    Scale 1.0
+    Damage (25)
+}
+
+actor XDecimatorProjectile3: XDecimatorProjectile replaces DecimatorProjectile3
+{
+    Scale 1.5
+    Damage (35)
+}
+
+actor XDecimatorPickup: DecimatorPickup replaces DecimatorPickup
+{
+    States
+    {
+        Spawn:
+        WEP7 ABABABAB 4 bright A_FadeOut(0.1)
+        "####" ABABABAB 2 bright A_FadeIn(0.1)
+        loop
+    }
+}

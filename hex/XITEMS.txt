@@ -1,0 +1,57 @@
+// Hexen-specific item drops
+
+actor ManaHealth5 : AmmoHealth5 replaces Mana1 {}
+actor ManaHealth10 : AmmoHealth10 replaces Mana2 {}
+actor ManaHealth25 : AmmoHealth25 replaces Mana3 {}
+
+actor XStaminaBonus: StaminaBonus replaces ArtiSuperHealth 
+{
+    +FLOATBOB
+    +INVENTORY.PICKUPFLASH
+    +INVENTORY.FANCYPICKUPSOUND
+    Inventory.PickupMessage ""
+    Tag "$TAG_ARTISUPERHEALTH"
+
+    States
+    {
+        Spawn:
+        SPHL A 350
+        Loop
+	}
+}
+
+// Turn the Krater of Might into Rampage
+actor XRampage: Rampage replaces ArtiBoostMana
+{
+  +FLOATBOB
+  +NOGRAVITY
+  +COUNTITEM
+  +INVENTORY.INVBAR
+  +INVENTORY.PICKUPFLASH
+  +INVENTORY.FANCYPICKUPSOUND
+  Inventory.MaxAmount 1
+  -AUTOACTIVATE
+  Inventory.Icon "ARTIBMAN"
+  Inventory.PickupSound "misc/p_pkup"
+  Inventory.PickupMessage "$TXT_ARTIBOOSTMANA" // "KRATER OF MIGHT"
+  Tag "$TAG_ARTIBOOSTMANA"
+  
+
+  States
+  {
+  Spawn:
+    BMAN A -1
+    Stop
+  }
+}
+
+// Drops for unused weapons
+actor WeapHealth1: AmmoHealth50 replaces FWeaponPiece1 {}
+actor WeapHealth2: AmmoHealth50 replaces FWeaponPiece2 {}
+actor WeapHealth3: AmmoHealth50 replaces FWeaponPiece3 {}
+actor WeapHealth4: AmmoHealth50 replaces CWeaponPiece1 {}
+actor WeapHealth5: AmmoHealth50 replaces CWeaponPiece2 {}
+actor WeapHealth6: AmmoHealth50 replaces CWeaponPiece3 {}
+actor XStaminaBonus2: XStaminaBonus replaces MWeaponPiece2 {}
+actor XStaminaBonus3: XStaminaBonus replaces MWeaponPiece3 {}
+

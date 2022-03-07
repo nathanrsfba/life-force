@@ -1,0 +1,264 @@
+// Base items for all Life Force mods
+
+// Healing items
+
+actor Health1 : CustomInventory
+{
+	Inventory.PickupMessage "Soul Globe"
+	Inventory.PickupSound "lifeforce/pickup"
+	-COUNTITEM
+
+	XScale .1
+	YScale .1
+
+    RenderStyle "Translucent"
+    Alpha 1.0
+	
+	+NOCLIP
+	
+	const int magnetRadius = 192;
+	const int magnetForce = 1;
+	
+	// Amount of force item is currently exerting. magnetForce if tracking
+	// a player, 0 if not
+	var int user_currentForce;
+	
+	ReactionTime 5
+
+	States
+	{
+		Spawn:
+		GLOB A 0
+		goto Main
+		
+		Main:
+		"####" "#" 0 A_JumpIf( GetCvar( skill ) == 5, "Decay" )
+		
+		Forever:
+		"####" ABC 6 Bright ThrustThing( angle*256/360, user_currentForce, 0, 0 )
+		"####" "#" 0 A_CheckProximity( "FindPlayer", "LifeForcePlayer", magnetRadius, 1, CPXF_SETTARGET | CPXF_NOZ )
+		"####" "#" 0 A_SetUserVar( "user_currentForce", 0 )
+		loop
+		
+		FindPlayer:
+		"####" "#" 0 A_FaceTarget
+		"####" "#" 0 A_SetUserVar( "user_currentForce", magnetForce )
+		goto Main
+		
+		Decay:
+		"####" ABC 6 Bright ThrustThing( angle*256/360, user_currentForce, 0, 0 )
+		"####" "#" 0 A_CheckProximity( "FindPlayer", "LifeForcePlayer", magnetRadius, 1, CPXF_SETTARGET | CPXF_NOZ )
+		"####" "#" 0 A_SetUserVar( "user_currentForce", 0 )
+		"####" ABC 6 ThrustThing( angle*256/360, user_currentForce, 0, 0 )
+		"####" "#" 0 A_FadeOut( 0.04 )
+		// "####" "#" 0 A_Countdown
+		"####" "#" 0 A_CheckProximity( "FindPlayer", "LifeForcePlayer", magnetRadius, 1, CPXF_SETTARGET | CPXF_NOZ )
+		"####" "#" 0 A_SetUserVar( "user_currentForce", 0 )
+		loop
+		
+		Pickup:
+		TNT1 A 0
+		TNT1 A 0 ACS_NamedExecuteWithResult("LF_AddHealth", 1)
+		stop
+	}
+}
+
+// This one doesn't spawn on Iron Caster skill
+actor Health1a : Health1
+{
+	States
+	{
+		Spawn:
+		TNT1 A 0
+		TNT1 A 0 A_JumpIf( GetCvar( skill ) == 5, "Nope" )
+		goto Super::Spawn
+		
+		Nope:
+		TNT1 A 0
+		stop
+	}
+}
+
+actor Health5 : Health1
+{ 
+	XScale .2
+	YScale .2
+	
+	States
+	{
+		Pickup:
+		TNT1 A 0
+		TNT1 A 0 ACS_NamedExecuteWithResult("LF_AddHealth", 5)
+		stop
+	}
+}
+
+actor Health10 : Health1 
+{ 
+    XScale .25
+    YScale .25
+
+	States
+	{
+		Pickup:
+		TNT1 A 0
+		TNT1 A 0 ACS_NamedExecuteWithResult("LF_AddHealth", 10)
+		stop
+	}
+}
+
+actor Health25 : Health1 
+{
+    XScale .35
+    YScale .35
+
+	States
+	{
+		Pickup:
+		TNT1 A 0
+		TNT1 A 0 ACS_NamedExecuteWithResult("LF_AddHealth", 25)
+		stop
+	}
+}
+
+actor Health50 : Health1 
+{
+    XScale .5
+    YScale .5
+
+	States
+	{
+		Pickup:
+		TNT1 A 0
+		TNT1 A 0 ACS_NamedExecuteWithResult("LF_AddHealth", 50)
+		stop
+	}
+}
+
+actor Health100 : Health1 replaces ArtiSuperHealth
+{
+	XScale .75
+	YScale .75
+
+	// SpawnID 25
+	+COUNTITEM
+	Inventory.PickupSound "lifeforce/gotpowerup"
+	
+	States
+	{
+		Pickup:
+		TNT1 A 0
+		TNT1 A 0 ACS_NamedExecuteWithResult("LF_AddHealth", 100)
+		stop
+	}
+}
+
+actor Health200 : Health1
+{
+	XScale 1.0
+	YScale 1.0
+
+	SpawnID 132
+	+COUNTITEM
+	Inventory.PickupSound "lifeforce/gotpowerup"
+	
+	States
+	{
+		Pickup:
+		TNT1 A 0
+		TNT1 A 0 ACS_NamedExecuteWithResult("LF_Megasphere")
+		stop
+	}
+}
+
+// Alternate versions with no decay nor magnet, to replace ammo spawns
+actor AmmoHealth5: Health5
+{
+	States
+	{
+		Spawn:
+		GLOB ABC 6 Bright
+		loop
+	}
+}
+
+actor AmmoHealth10: Health10
+{
+	States
+	{
+		Spawn:
+		GLOB ABC 6 Bright
+		loop
+	}
+}
+
+actor AmmoHealth25 : Health25
+{
+	States
+	{
+		Spawn:
+		GLOB ABC 6 Bright
+		loop
+	}
+}
+
+actor AmmoHealth50: Health50
+{
+	States
+	{
+		Spawn:
+		GLOB ABC 6 Bright
+		loop
+	}
+}
+
+
+// ---[ Stamina Bonus ]-----------------------------------------
+
+actor StaminaBonus: CustomInventory
+{
+	+INVENTORY.FANCYPICKUPSOUND
+	Inventory.PickupSound "lifeforce/gotpowerup"
+	Inventory.PickupMessage ""
+	
+	States
+	{
+		Spawn:
+		STAM ABCABC 5 bright A_FadeOut(0.1)
+		"####" ABCABC 5 bright A_FadeIn(0.1)
+		loop
+		
+		Pickup:
+		TNT1 A 0
+		TNT1 A 0 ACS_NamedExecuteWithResult("LF_Stamina")
+		stop
+	}
+}
+
+// ---[ Rampage ]--------------------------
+actor Rampage: PowerupGiver
+{
+	// Translation "128:151=32:47","13:15=45:47","9:12=44:47","159:159=47:47"
+	// inventory.icon "RAMPA0"
+	inventory.pickupmessage "Rampage!!"
+	powerup.color gold 0.25
+	inventory.maxamount 0
+	powerup.type "Rampage"
+	powerup.duration -30
+	+AUTOACTIVATE
+	+INVENTORY.FANCYPICKUPSOUND
+	Inventory.PickupSound "lifeforce/gotpowerup"
+
+	States
+	{
+		Spawn:
+		RAMP ABCDCB 5 bright A_FadeOut(0.1)
+		RAMP ABCDCB 5 bright A_FadeIn(0.1)
+		loop
+	}
+}
+
+ACTOR PowerRampage: Powerup
+{
+	Powerup.Duration -30
+}

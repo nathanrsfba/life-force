@@ -1,0 +1,72 @@
+// Most of this is just straight out of Doom defaults
+
+clearskills
+
+skill baby
+{
+	AutoUseHealth
+	AmmoFactor = 2
+	DamageFactor = 0.5
+	EasyBossBrain
+	SpawnFilter = Baby
+	// PicName = "M_JKILL"
+	Name = "$SKILL_BABY"
+	Key = "i"
+}
+
+skill easy
+{
+	EasyBossBrain
+	SpawnFilter = Easy
+	// PicName = "M_ROUGH"
+	Name = "$SKILL_EASY"
+	Key = "h"
+}
+
+skill normal
+{
+	SpawnFilter = Normal
+	// PicName = "M_HURT"
+	Key = "h"
+	Name = "$SKILL_NORMAL"
+	DefaultSkill
+}
+
+skill hard
+{
+	SpawnFilter = Hard
+	// PicName = "M_ULTRA"
+	Name = "$SKILL_HARD"
+	Key = "u"
+}
+
+// Same as hard, but our ACS code will behave slightly differently...
+skill iron
+{
+	DoubleAmmoFactor = 1.5
+	SpawnFilter = Hard
+	Name = "Iron Caster"
+	Key = "i"
+}
+
+// Same as hard, but our ACS code will behave slightly differently...
+skill steel
+{
+	DoubleAmmoFactor = 1.5
+	SpawnFilter = Hard
+	Name = "Wizard of Steel"
+	Key = "w"
+}
+
+skill nightmare
+{
+	AmmoFactor = 2
+	FastMonsters
+	DisableCheats
+	RespawnTime = 12
+	SpawnFilter = Nightmare
+	PicName = "M_NMARE"
+	Name = "$SKILL_NIGHTMARE"
+	MustConfirm
+	Key = "n"
+}

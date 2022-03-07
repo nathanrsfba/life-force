@@ -1,0 +1,92 @@
+// Doom-specific item drops
+
+actor ClipHealth : AmmoHealth5 replaces Clip {}
+actor ClipBoxHealth : AmmoHealth10 replaces ClipBox {}
+actor ShellHealth : AmmoHealth5 replaces Shell {}
+actor ShellBoxHealth : AmmoHealth10 replaces ShellBox {}
+actor RocketHealth : AmmoHealth10 replaces RocketAmmo {}
+actor RocketBoxHealth : AmmoHealth25 replaces RocketBox {}
+actor CellHealth : AmmoHealth25 replaces Cell {}
+actor CellPackHealth : AmmoHealth50 replaces CellPack {}
+
+actor DStaminaBonus: StaminaBonus replaces Backpack 
+{
+	Translation "192:207=160:167","240:247=72:79"
+	
+	States
+	{
+		Spawn:
+		SOUL ABCDCB 5 bright A_FadeOut(0.1)
+		SOUL ABCDCB 5 bright A_FadeIn(0.1)
+		loop
+	}
+}
+
+actor DRampage: Rampage replaces Berserk
+{
+	Translation "128:151=32:47","13:15=45:47","9:12=44:47","159:159=47:47"
+	inventory.icon "MEGAA0"
+
+	States
+	{
+		Spawn:
+		MEGA ABCDCB 5 bright A_FadeOut(0.1)
+		MEGA ABCDCB 5 bright A_FadeIn(0.1)
+		loop
+	}
+}
+
+actor DHealth100 : Health100 replaces Health100
+{
+	XScale 1.0
+	YScale 1.0
+
+	// SpawnID 25
+	+COUNTITEM
+	Inventory.PickupSound "lifeforce/gotpowerup"
+	Inventory.PickupMessage "$GOTSUPER" // "Supercharge!"
+}
+
+// Map-spawned soulsphere won't follow the player
+actor DSoulSphere : Health100 replaces SoulSphere
+{
+	States
+	{
+		Spawn:
+		SOUL ABCDCB 6 Bright
+		loop
+	}
+}
+
+actor DHealth200 : Health200 replaces Health200
+{
+	SpawnID 132
+	+COUNTITEM
+    Inventory.PickupMessage "$GOTMSPHERE" // "MegaSphere!"
+	Inventory.PickupSound "lifeforce/gotpowerup"
+	
+	States
+	{
+		Spawn:
+		MEGA A 0
+		goto Main
+		
+		Pickup:
+		TNT1 A 0
+		TNT1 A 0 ACS_NamedExecuteWithResult("LF_Megasphere")
+		stop
+	}
+}
+
+
+// Map-spawned megasphere won't follow the player
+actor DMegaSphere : Health200 replaces MegaSphere
+{
+	States
+	{
+		Spawn:
+		MEGA ABCDCB 6 Bright
+		loop
+	}
+}
+

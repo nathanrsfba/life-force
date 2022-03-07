@@ -1,0 +1,15 @@
+// Game-specific player class
+
+actor LifeForcePlayer: LifeForcePlayerCommon replaces LifeForcePlayerCommon
+{
+	states
+	{
+		Death.Lightning:
+		PLAY G 0
+		goto Super::Death.Lightning
+
+		Death.Vaporize:
+		PLAY G 0
+		goto Super::Death.Vaporize
+	}
+}

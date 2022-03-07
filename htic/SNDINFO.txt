@@ -1,0 +1,15 @@
+$alias lifeforce/beamfire world/lavasizzle
+$alias lifeforce/lightningstart weapons/gauntletsuse
+$alias lifeforce/lightningfire weapons/gauntletson
+$alias lifeforce/staffsmack mummy/attack2
+$alias lifeforce/fireballstart weapons/hornrodshoot
+$alias lifeforce/fireballend minotaur/fx2hit
+$alias lifeforce/hosestart himp/leaderattack
+$alias lifeforce/sparklight weapons/phoenixpowshoot
+$alias lifeforce/burner weapons/phoenixpowshoot
+$alias lifeforce/burnerhit world/lavasizzle
+$alias lifeforce/decactive mummy/head
+
+$alias lifeforce/pickup misc/i_pkup
+$alias lifeforce/gotpowerup misc/p_pkup
+$alias lifeforce/gotweapon misc/w_pkup

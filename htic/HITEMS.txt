@@ -1,0 +1,18 @@
+// Heretic-specific item drops
+
+actor GeodeHealth: AmmoHealth5 replaces GoldWandAmmo {}
+actor GeodeHealthBig : AmmoHealth10 replaces GoldWandHefty {}
+actor BoltHealth : AmmoHealth5 replaces CrossbowAmmo {}
+actor BoltHealthBig : AmmoHealth10 replaces CrossbowHefty {}
+actor OrbHealth : AmmoHealth5 replaces BlasterAmmo {}
+actor OrbHealthBig : AmmoHealth10 replaces BlasterHefty {}
+actor RuneHealth : AmmoHealth5 replaces SkullRodAmmo {}
+actor RuneHealthBig : AmmoHealth25 replaces SkullRodHefty {}
+actor FlameHealth : AmmoHealth25 replaces PhoenixRodAmmo {}
+actor FlameHealthBig : AmmoHealth50 replaces PhoenixRodHefty {}
+actor SphereHealth : AmmoHealth25 replaces MaceAmmo {}
+actor SphereHealthBig : AmmoHealth50 replaces MaceHefty {}
+
+actor HStaminaBonus: StaminaBonus replaces BagOfHolding {}
+
+// No Rampage powerup; Tome of Power has that effect instead

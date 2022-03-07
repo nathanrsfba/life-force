@@ -1,0 +1,8 @@
+#include "HCLASSES"
+#include "WEAPONS"
+#include "HWEAPONS"
+#include "PLAYER"
+#include "HPLAYER"
+#include "ITEMS"
+#include "HITEMS"
+#include "MONSTERS"

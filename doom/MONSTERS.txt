@@ -1,0 +1,264 @@
+// Doom monster definitions
+
+actor LFFlame: ArchvileFire {}
+
+actor LFZombieMan: ZombieMan replaces ZombieMan
+{
+    DropItem "Health1" 
+    DropItem "Health1a"
+
+	states
+	{
+		Death.Lightning:
+		POSS H 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 0 bright A_SpawnItemEx("LightningSpark", 0, 0, 20, 0, 0, 0, 0, SXF_TRANSFERPOINTERS)
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		goto Super::Death
+		
+		Death.Fire:
+		TNT1 A 0 A_SetTranslation( "Crisp" )
+		TNT1 A 0 A_SpawnItemEx( "LFFlame" )
+		goto Super::XDeath
+
+		Death.Vaporize:
+		POSS H 0 A_Scream
+		"####" "#" 0 A_NoBlocking
+		"####" "#" 0 A_SetTranslation( "Zap" )
+		"####" "##########" 1 A_FadeOut(0.1)
+		Stop
+	}	
+}
+
+actor LFShotgunGuy: ShotgunGuy replaces ShotgunGuy
+{
+    DropItem "Health1"
+    DropItem "Health1a"
+    DropItem "FireballPickup2"
+
+	states
+	{
+		Death.Lightning:
+		SPOS H 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 0 bright A_SpawnItemEx("LightningSpark", 0, 0, 20, 0, 0, 0, 0, SXF_TRANSFERPOINTERS)
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		goto Super::Death
+		
+		Death.Fire:
+		TNT1 A 0 A_SetTranslation( "Crisp" )
+		TNT1 A 0 A_SpawnItemEx( "LFFlame" )
+		goto Super::XDeath
+
+		Death.Vaporize:
+		SPOS H 0 A_Scream
+		"####" "#" 0 A_NoBlocking
+		"####" "#" 0 A_SetTranslation( "Zap" )
+		"####" "##########" 1 A_FadeOut(0.1)
+		Stop
+	}	
+}
+
+actor LFDoomImp: DoomImp replaces DoomImp
+{
+    DropItem "Health5"
+    DropItem "Health1"
+
+	states
+	{
+		Death.Lightning:
+		TROO I 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 0 bright A_SpawnItemEx("LightningSpark", 0, 0, 20, 0, 0, 0, 0, SXF_TRANSFERPOINTERS)
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		goto Super::Death
+		
+		Death.Fire:
+		TNT1 A 0 A_SetTranslation( "Crisp" )
+		TNT1 A 0 A_SpawnItemEx( "LFFlame" )
+		goto Super::XDeath
+
+		Death.Vaporize:
+		TROO I 0 A_Scream
+		"####" "#" 0 A_NoBlocking
+		"####" "#" 0 A_SetTranslation( "Zap" )
+		"####" "##########" 1 A_FadeOut(0.1)
+		Stop
+	}	
+}
+
+actor LFChaingunGuy: ChaingunGuy replaces ChaingunGuy
+{
+    DropItem "Health5"
+    DropItem "SparkLightPickup2"
+    DropItem "Health1a"
+
+	states
+	{
+		Death.Lightning:
+		CPOS H 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 0 bright A_SpawnItemEx("LightningSpark", 0, 0, 20, 0, 0, 0, 0, SXF_TRANSFERPOINTERS)
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		goto Super::Death
+		
+		Death.Fire:
+		TNT1 A 0 A_SetTranslation( "Crisp" )
+		TNT1 A 0 A_SpawnItemEx( "LFFlame" )
+		goto Super::XDeath
+
+		Death.Vaporize:
+		CPOS H 0 A_Scream
+		"####" "#" 0 A_NoBlocking
+		"####" "#" 0 A_SetTranslation( "Zap" )
+		"####" "##########" 1 A_FadeOut(0.1)
+		Stop
+	}	
+}
+
+actor LFDemon: Demon replaces Demon
+{
+    DropItem "Health10"
+    DropItem "Health5"
+}
+
+actor LFSpectre: Spectre replaces Spectre
+{
+    DropItem "Health10"
+    DropItem "Health5"
+}
+
+actor LFCacodemon: Cacodemon replaces Cacodemon
+{
+    DropItem "Health25"
+    DropItem "Health10"
+    DropItem "Health5"
+}
+
+actor LFLostSoul: LostSoul replaces LostSoul
+{
+    DropItem "Health10"
+}
+
+actor LFBaronOfHell: BaronOfHell replaces BaronOfHell
+{
+    DropItem "Health100"
+}
+
+actor LFHellKnight: HellKnight replaces HellKnight
+{
+    DropItem "Health50"
+}
+
+actor LFRevenant: Revenant replaces Revenant
+{
+    DropItem "Health25"
+    DropItem "Health5"
+}
+
+actor LFFatso: Fatso replaces Fatso
+{
+    DropItem "Health50"
+    DropItem "Health10"
+}
+
+actor LFPainElemental: PainElemental replaces PainElemental
+{
+    DropItem "Health25"
+    DropItem "Health10"
+    DropItem "Health5"
+}
+
+actor LFArachnotron: Arachnotron replaces Arachnotron
+{
+    DropItem "Health50"
+}
+
+actor LFArchvile: Archvile replaces Archvile
+{
+    DropItem "Health50"
+    DropItem "Health10"
+    DropItem "Health10"
+}
+
+actor LFWolfensteinSS: WolfensteinSS replaces WolfensteinSS
+{
+    DropItem "Health5"
+
+    States
+    {
+		Death.Lightning:
+		SSWV I 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 0 bright A_SpawnItemEx("LightningSpark", 0, 0, 20, 0, 0, 0, 0, SXF_TRANSFERPOINTERS)
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		"####" "#" 1 A_SetTranslation( "Zap" )
+		"####" "#" 1 A_SetTranslation( "Def" )
+		goto Super::Death
+		
+		Death.Fire:
+		TNT1 A 0 A_SetTranslation( "Crisp" )
+		TNT1 A 0 A_SpawnItemEx( "LFFlame" )
+		goto Super::XDeath
+
+		Death.Vaporize:
+		SSWV I 0 A_Scream
+		"####" "#" 0 A_NoBlocking
+		"####" "#" 0 A_SetTranslation( "Zap" )
+		"####" "##########" 1 A_FadeOut(0.1)
+		Stop
+    }
+}
+
+actor LFCyberdemon: Cyberdemon replaces Cyberdemon
+{
+    DropItem "Health200"
+}
+
+actor LFSpiderMastermind: SpiderMastermind replaces SpiderMastermind
+{
+    DropItem "Health200"
+}

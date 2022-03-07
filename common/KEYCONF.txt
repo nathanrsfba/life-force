@@ -1,0 +1,6 @@
+clearplayerclasses
+addplayerclass "LifeForcePlayer"
+defaultbind 5 "slot 5"
+defaultbind 6 "slot 6"
+defaultbind 7 "slot 7"
+defaultbind 8 "slot 8"

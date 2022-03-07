@@ -1,0 +1,15 @@
+$alias lifeforce/beamfire vile/start
+$alias lifeforce/lightningstart brain/spit
+$alias lifeforce/lightningfire vile/start
+$alias lifeforce/staffsmack skeleton/melee
+$alias lifeforce/fireballstart vile/firestrt
+$alias lifeforce/fireballend imp/shotx
+$alias lifeforce/hosestart vile/firestrt
+$alias lifeforce/sparklight vile/firestrt
+$alias lifeforce/burner vile/start
+$alias lifeforce/burnerhit vile/firecrkl
+$alias lifeforce/decactive skull/melee
+
+$alias lifeforce/pickup misc/i_pkup
+$alias lifeforce/gotpowerup misc/p_pkup
+$alias lifeforce/gotweapon misc/p_pkup

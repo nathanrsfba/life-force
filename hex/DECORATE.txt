@@ -1,0 +1,8 @@
+#include "XCLASSES"
+#include "ITEMS"
+#include "XITEMS"
+#include "WEAPONS"
+#include "XWEAPONS"
+#include "PLAYER"
+#include "XPLAYER"
+#include "MONSTERS"

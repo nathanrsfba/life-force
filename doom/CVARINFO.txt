@@ -1,0 +1,2 @@
+server noarchive string lf_version = "LifeForce/Doom v2.2";
+server noarchive bool lf_sgupgrade = false;

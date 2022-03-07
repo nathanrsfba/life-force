@@ -1,0 +1,26 @@
+// Game-specific player class
+
+actor LifeForcePlayer: LifeForcePlayerCommon replaces LifeForcePlayerCommon
+{
+    Player.HealRadiusType "Health"
+    Player.FlechetteType "ArtiPoisonBag3"
+
+    Player.SpawnClass "Any"
+
+	states
+	{
+		Death.Lightning:
+		MAGE H 0
+		goto Super::Death.Lightning
+
+		Death.Vaporize:
+		MAGE H 0
+		goto Super::Death.Vaporize
+		
+        Death.Fire:
+		TNT1 A 0 A_SetTranslation( "PlayerCrisp" )
+		TNT1 A 0 A_SpawnItemEx( "LFFlame", 0, 0, 32 )
+		goto Death
+		
+	}
+}

@@ -211,6 +211,9 @@ Soul globes that are magnetted towards the player won't get picked up unless
 the player is moving. This seems to be built-in Doom behavior. (Any why not;
 in the original pickups could be counted on not to move around!)
 
+The decimator fizzles when hitting a decorative object, instead of bouncing.
+This seems to be a limitation of the engine after some recent changes.
+
 The Krater of Might powerup seems massively OP against bosses.
 
 

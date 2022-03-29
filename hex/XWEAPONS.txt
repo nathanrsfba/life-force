@@ -42,7 +42,7 @@ actor XLifeForceWeapon: LifeForceWeapon
         "####" "#" 1 Offset(80,161)
         "####" "#" 1 Offset(40,124)
         "####" "#" 1 Offset(1,86) ACS_NamedExecuteWithResult( "LF_SubHealth", 1 )
-        "####" "#" 0 A_CustomPunch(12,0,0,"SmackPuff",128)
+        "####" "#" 0 A_CustomPunch(24,0,0,"SmackPuff",128)
         "####" "#" 1 Offset(-40,86)
         "####" "#" 1 Offset(-80,126)
         "####" "#" 1 Offset(-120,166)

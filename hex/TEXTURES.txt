@@ -113,9 +113,9 @@ Sprite RAMPD0, 31, 27
 
 Sprite STAFA0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch MSTFA0, 0, 0
 	{
 		Translation "164:185=146:163", "240:245=146:163"
@@ -124,9 +124,9 @@ Sprite STAFA0, 90, 61
 
 Sprite STAFB0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch MSTFB0, 0, 0
 	{
 		Translation "164:185=146:163", "240:245=146:163"
@@ -135,9 +135,9 @@ Sprite STAFB0, 90, 61
 
 Sprite STAFC0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch MSTFC0, 0, 0
 	{
 		Translation "164:185=146:163", "240:245=146:163"
@@ -146,9 +146,9 @@ Sprite STAFC0, 90, 61
 
 Sprite STAFD0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch MSTFD0, 0, 0
 	{
 		Translation "164:185=146:163", "240:245=146:163"
@@ -157,9 +157,9 @@ Sprite STAFD0, 90, 61
 
 Sprite STAFE0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch MSTFJ0, 0, 0
 	{
 		Translation "164:185=146:163", "240:245=146:163"
@@ -168,9 +168,9 @@ Sprite STAFE0, 90, 61
 
 Sprite STF1A0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFA0, 0, 0
 	Patch STAFA0, 0, 0
 	{
@@ -182,9 +182,9 @@ Sprite STF1A0, 90, 61
 
 Sprite STF1B0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFB0, 0, 0
 	Patch STAFB0, 0, 0
 	{
@@ -196,9 +196,9 @@ Sprite STF1B0, 90, 61
 
 Sprite STF1C0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFC0, 0, 0
 	Patch STAFC0, 0, 0
 	{
@@ -210,9 +210,9 @@ Sprite STF1C0, 90, 61
 
 Sprite STF1D0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFD0, 0, 0
 	Patch STAFE0, 0, 0
 	{
@@ -224,9 +224,9 @@ Sprite STF1D0, 90, 61
 
 Sprite STF1E0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFE0, 0, 0
 	{
 		Translation "146:163=217:223"
@@ -235,9 +235,9 @@ Sprite STF1E0, 90, 61
 
 Sprite STF2A0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFA0, 0, 0
 	Patch STAFA0, 0, 0
 	{
@@ -249,9 +249,9 @@ Sprite STF2A0, 90, 61
 
 Sprite STF2B0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFB0, 0, 0
 	Patch STAFB0, 0, 0
 	{
@@ -263,9 +263,9 @@ Sprite STF2B0, 90, 61
 
 Sprite STF2C0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFC0, 0, 0
 	Patch STAFC0, 0, 0
 	{
@@ -277,9 +277,9 @@ Sprite STF2C0, 90, 61
 
 Sprite STF2D0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFD0, 0, 0
 	Patch STAFD0, 0, 0
 	{
@@ -291,9 +291,9 @@ Sprite STF2D0, 90, 61
 
 Sprite STF2E0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFD0, 0, 0
 	{
 		Translation "146:163=203:210"
@@ -389,9 +389,9 @@ Sprite BALBF0, 92, 80
 
 Sprite STF3A0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFA0, 0, 0
 	Patch STAFA0, 0, 0
 	{
@@ -403,9 +403,9 @@ Sprite STF3A0, 90, 61
 
 Sprite STF3B0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFB0, 0, 0
 	Patch STAFB0, 0, 0
 	{
@@ -417,9 +417,9 @@ Sprite STF3B0, 90, 61
 
 Sprite STF3C0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFC0, 0, 0
 	Patch STAFC0, 0, 0
 	{
@@ -431,9 +431,9 @@ Sprite STF3C0, 90, 61
 
 Sprite STF3D0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFD0, 0, 0
 	Patch STAFE0, 0, 0
 	{
@@ -445,9 +445,9 @@ Sprite STF3D0, 90, 61
 
 Sprite STF3E0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFE0, 0, 0
 	{
 		Translation "154:159=203:210"
@@ -456,9 +456,9 @@ Sprite STF3E0, 90, 61
 
 Sprite STF5A0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFA0, 0, 0
 	Patch STAFA0, 0, 0
 	{
@@ -470,9 +470,9 @@ Sprite STF5A0, 90, 61
 
 Sprite STF5B0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFB0, 0, 0
 	Patch STAFB0, 0, 0
 	{
@@ -484,9 +484,9 @@ Sprite STF5B0, 90, 61
 
 Sprite STF5C0, 96, 65
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -153, -145
+	Offset -193, -145
 	Patch STFFC0, 0, 0
 	Patch STFFC0, 0, 0
 	{
@@ -498,9 +498,9 @@ Sprite STF5C0, 96, 65
 
 Sprite STF5D0, 96, 69
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -153, -141
+	Offset -193, -141
 	Patch STFFD0, 0, 0
 	Patch STFFD0, 0, 0
 	{
@@ -512,9 +512,9 @@ Sprite STF5D0, 96, 69
 
 Sprite STF5E0, 110, 80
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -146, -130
+	Offset -186, -130
 	Patch STFFE0, 0, 0
 	{
 		Translation "146:163=224:230", "67:80=132:143", "217:223=224:230"
@@ -523,9 +523,9 @@ Sprite STF5E0, 110, 80
 
 Sprite STF5F0, 96, 65
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -153, -145
+	Offset -193, -145
 	Patch STFFC0, 0, 0
 	{
 		Translation "146:163=224:230", "67:80=132:143", "217:223=224:230"
@@ -534,9 +534,9 @@ Sprite STF5F0, 96, 65
 
 Sprite STF5G0, 96, 69
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -153, -141
+	Offset -193, -141
 	Patch STFFD0, 0, 0
 	{
 		Translation "146:163=224:230", "67:80=132:143", "217:223=224:230"
@@ -546,9 +546,9 @@ Sprite STF5G0, 96, 69
 
 Sprite STF7A0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFA0, 0, 0
 	Patch MSTFA0, 0, 0
 	{
@@ -559,9 +559,9 @@ Sprite STF7A0, 90, 61
 
 Sprite STF7B0, 90, 61
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -156, -149
+	Offset -196, -149
 	Patch STAFB0, 0, 0
 	Patch MSTFB0, 0, 0
 	{
@@ -573,9 +573,9 @@ Sprite STF7B0, 90, 61
 
 Sprite STF7C0, 96, 65
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -153, -145
+	Offset -193, -145
 	Patch STFFC0, 0, 0
 	Patch STFFC0, 0, 0
 	{
@@ -587,9 +587,9 @@ Sprite STF7C0, 96, 65
 
 Sprite STF7D0, 96, 69
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -153, -141
+	Offset -193, -141
 	Patch STFFD0, 0, 0
 	Patch STFFD0, 0, 0
 	{
@@ -601,9 +601,9 @@ Sprite STF7D0, 96, 69
 
 Sprite STF7E0, 110, 80
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -146, -130
+	Offset -186, -130
 	Patch STFFE0, 0, 0
 	{
 		Translation "146:163=164:185", "67:80=164:185", "217:223=164:185"
@@ -612,9 +612,9 @@ Sprite STF7E0, 110, 80
 
 Sprite STF7F0, 96, 65
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -153, -145
+	Offset -193, -145
 	Patch STFFC0, 0, 0
 	{
 		Translation "146:163=164:185", "67:80=164:185", "217:223=164:185"
@@ -623,9 +623,9 @@ Sprite STF7F0, 96, 65
 
 Sprite STF7G0, 96, 69
 {
-	XScale 1.250
+	XScale 1.500
 	YScale 1.250
-	Offset -153, -141
+	Offset -193, -141
 	Patch STFFD0, 0, 0
 	{
 		Translation "146:163=164:185", "67:80=164:185", "217:223=164:185"
